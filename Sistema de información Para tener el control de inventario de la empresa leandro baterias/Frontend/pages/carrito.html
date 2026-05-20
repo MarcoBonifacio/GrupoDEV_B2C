@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras | Leandro Baterías</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .cart-page { margin-top: 140px; padding: 40px 0; }
+        .cart-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; }
+        .cart-items { background: var(--bg-white); border-radius: var(--radius-lg); padding: 24px; }
+        .cart-item { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border-light); }
+        .cart-item:last-child { border-bottom: none; }
+        .cart-item-image { width: 120px; height: 120px; border-radius: var(--radius-md); overflow: hidden; flex-shrink: 0; }
+        .cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+        .cart-item-details { flex: 1; }
+        .cart-item-name { font-size: var(--font-size-lg); font-weight: 600; margin-bottom: 8px; }
+        .cart-item-meta { font-size: var(--font-size-sm); color: var(--text-light); margin-bottom: 12px; }
+        .cart-item-price { font-size: var(--font-size-xl); font-weight: 700; color: var(--primary-color); margin-bottom: 12px; }
+        .cart-item-actions { display: flex; align-items: center; gap: 15px; }
+        .quantity-control { display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: var(--radius-md); }
+        .quantity-control button { width: 32px; height: 32px; background: var(--bg-gray); border: none; cursor: pointer; }
+        .quantity-control button:hover { background: var(--primary-color); color: white; }
+        .quantity-control input { width: 50px; height: 32px; text-align: center; border: none; }
+        .remove-item { color: var(--danger-color); font-size: var(--font-size-sm); cursor: pointer; }
+        .remove-item:hover { text-decoration: underline; }
+        .cart-summary { background: var(--bg-white); border-radius: var(--radius-lg); padding: 24px; height: fit-content; position: sticky; top: 160px; }
+        .cart-summary h3 { font-size: var(--font-size-xl); margin-bottom: 20px; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: var(--font-size-sm); }
+        .summary-row.total { font-size: var(--font-size-lg); font-weight: 700; border-top: 2px solid var(--border-color); padding-top: 12px; margin-top: 12px; }
+        .summary-row.total span:last-child { color: var(--primary-color); font-size: var(--font-size-2xl); }
+        .cart-empty { text-align: center; padding: 60px 20px; }
+        .cart-empty i { font-size: 80px; color: var(--border-color); margin-bottom: 20px; }
+        .cart-empty h3 { margin-bottom: 10px; }
+        .cart-empty p { color: var(--text-light); margin-bottom: 20px; }
+        .coupon-code { display: flex; gap: 10px; margin: 20px 0; }
+        .coupon-code input { flex: 1; padding: 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); }
+        .benefits-list { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-light); }
+        .benefit-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: var(--font-size-sm); color: var(--text-medium); }
+        .benefit-item i { color: var(--success-color); }
+        @media (max-width: 992px) { .cart-layout { grid-template-columns: 1fr; } .cart-summary { position: static; } }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="header-main">
+                <div class="container">
+                    <div class="header-main-content">
+                        <a href="../index.html" class="logo">
+                            <div class="logo-icon"><i class="fas fa-car-battery"></i></div>
+                            <div class="logo-text"><span class="logo-name">Leandro</span><span class="logo-slogan">Baterías</span></div>
+                        </a>
+                        <div class="header-actions">
+                            <a href="catalogo.html" class="btn btn-primary">Seguir Comprando</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="cart-page">
+            <div class="container">
+                <h1 style="margin-bottom: 30px;">Mi Carrito de Compras</h1>
+                <div id="cart-content">
+                    <div class="loading-spinner" style="text-align: center; padding: 60px;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: var(--primary-color);"></i>
+                        <p>Cargando carrito...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-bottom">
+                <div class="container">
+                    <p>&copy; 2026 Leandro Baterías.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/utils/format.js"></script>
+    <script src="../js/components/carrito.js"></script>
+    <script src="../js/components/modal.js"></script>
+    <script src="../js/pages/carrito.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

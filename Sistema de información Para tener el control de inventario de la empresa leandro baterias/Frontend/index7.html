@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Leandro Baterías - Baterías automotrices de calidad">
+    <title>Leandro Baterías | Baterías Automotrices</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .dark-mode { --bg-light: #121212; --bg-white: #1e1e1e; --bg-gray: #2d2d2d; --text-dark: #e0e0e0; --text-medium: #b0b0b0; --text-light: #808080; --border-color: #404040; --border-light: #333333; }
+        .dark-mode .header { background: #1e1e1e; }
+        .dark-mode .header-top { background: #0d0d0d; }
+        .dark-mode .header-main { background: #1e1e1e; }
+        .dark-mode .search-box { background: #2d2d2d; border-color: #404040; }
+        .dark-mode .search-input { background: #2d2d2d; color: #e0e0e0; }
+        .dark-mode .product-card { background: #1e1e1e; border-color: #333; }
+        .dark-mode .product-card:hover { border-color: var(--primary-color); }
+        .dark-mode .product-name { color: #e0e0e0; }
+        .dark-mode .product-brand { color: #b0b0b0; }
+        .dark-mode .filters-panel { background: #1e1e1e; }
+        .dark-mode .filter-title { color: #e0e0e0; }
+        .dark-mode .filter-option-label { color: #b0b0b0; }
+        .dark-mode .form-select { background: #2d2d2d; color: #e0e0e0; border-color: #404040; }
+        .dark-mode .form-input { background: #2d2d2d; color: #e0e0e0; border-color: #404040; }
+        .dark-mode .price-input { background: #2d2d2d; color: #e0e0e0; border-color: #404040; }
+        .dark-mode .sort-bar { background: #1e1e1e; }
+        .dark-mode .sort-select { background: #2d2d2d; color: #e0e0e0; border-color: #404040; }
+        .dark-mode .results-count { color: #b0b0b0; }
+        .dark-mode .footer { background: #0d0d0d; }
+        .dark-mode .footer-bottom { background: #000; }
+        .dark-mode .brand-btn { background: #1e1e1e; }
+        
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+
+        .brand-filter-section { padding: 30px 0; background: var(--bg-white); }
+        .brand-filter-title { font-size: var(--font-size-xl); font-weight: 700; margin-bottom: 20px; text-align: center; }
+        .brand-buttons { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .brand-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            background: var(--bg-white);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .brand-btn:hover, .brand-btn.active { border-color: var(--primary-color); background: var(--primary-color); color: white; }
+
+        .dashboard-section { padding: 60px 0; background: var(--bg-gray); }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .dashboard-card { background: var(--bg-white); padding: 24px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); text-align: center; }
+        .dashboard-card h3 { font-size: var(--font-size-sm); color: var(--text-light); margin-bottom: 12px; }
+        .dashboard-card .value { font-size: var(--font-size-3xl); font-weight: 800; color: var(--primary-color); }
+        .dashboard-card .value.positive { color: var(--success-color); }
+
+        .team-section { padding: 60px 0; background: var(--bg-white); }
+        .team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+        .team-member { text-align: center; padding: 24px 16px; border-radius: var(--radius-lg); background: var(--bg-gray); transition: all 0.3s; }
+        .team-member:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .team-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: white; font-size: 28px; }
+        .team-member h4 { font-size: var(--font-size-sm); font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+        .team-role { font-size: var(--font-size-xs); color: var(--primary-color); font-weight: 600; }
+        .team-member.product-owner .team-avatar { background: linear-gradient(135deg, #1a73e8, #0d47a1); }
+        .team-member.scrum-master .team-avatar { background: linear-gradient(135deg, #ff6d00, #e65100); }
+        .team-member.sponsor .team-avatar { background: linear-gradient(135deg, #00c853, #00695c); }
+        .team-member.devteam .team-avatar { background: linear-gradient(135deg, #9c27b0, #4a148c); }
+
+        .main-content-wrapper { display: flex; gap: 30px; }
+        .sidebar-search { width: 280px; flex-shrink: 0; }
+        .sidebar-search-box { background: var(--bg-white); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--border-light); position: sticky; top: 180px; }
+        .sidebar-search-box h3 { font-size: var(--font-size-base); font-weight: 700; margin-bottom: 16px; color: var(--text-dark); }
+        .sidebar-search-input { width: 100%; padding: 12px; border: 2px solid var(--border-color); border-radius: var(--radius-md); font-size: var(--font-size-sm); margin-bottom: 12px; }
+        .sidebar-search-input:focus { border-color: var(--primary-color); outline: none; }
+        .sidebar-search-results { max-height: 250px; overflow-y: auto; }
+        .sidebar-result-item { display: flex; gap: 10px; padding: 10px; border-bottom: 1px solid var(--border-light); cursor: pointer; }
+        .sidebar-result-item:hover { background: var(--bg-gray); }
+        .sidebar-result-item img { width: 45px; height: 45px; border-radius: var(--radius-sm); object-fit: cover; }
+        .sidebar-result-info h5 { font-size: var(--font-size-xs); font-weight: 600; color: var(--text-dark); }
+        .sidebar-result-info p { font-size: 10px; color: var(--text-light); }
+        .products-area { flex: 1; }
+
+        .vehicle-finder-section { padding: 40px 0; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); }
+        .vehicle-finder-box { background: var(--bg-white); padding: 30px; border-radius: var(--radius-lg); }
+        .vehicle-finder-title { font-size: var(--font-size-2xl); font-weight: 700; margin-bottom: 20px; color: var(--text-dark); text-align: center; }
+        .vf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .vf-field label { display: block; font-size: var(--font-size-xs); font-weight: 600; margin-bottom: 6px; color: var(--text-medium); }
+        .vf-field select { width: 100%; padding: 12px; border: 2px solid var(--border-color); border-radius: var(--radius-md); font-size: var(--font-size-sm); }
+        .vf-field select:focus { border-color: var(--primary-color); outline: none; }
+        .vf-btn { grid-column: span 4; display: flex; justify-content: center; margin-top: 16px; }
+        .vf-btn .btn { padding: 14px 40px; }
+
+        .checkout-modal .modal-content { max-width: 600px; }
+        .checkout-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: var(--font-size-sm); }
+        .checkout-summary { background: var(--bg-gray); padding: 16px; border-radius: var(--radius-md); margin: 16px 0; }
+        .checkout-total { display: flex; justify-content: space-between; font-size: var(--font-size-lg); font-weight: 800; color: var(--primary-color); padding-top: 12px; border-top: 2px solid var(--border-color); margin-top: 8px; }
+        
+        .payment-section { margin: 20px 0; }
+        .payment-section h4 { margin-bottom: 12px; font-size: var(--font-size-base); }
+        .payment-options { display: flex; gap: 12px; }
+        .payment-option { flex: 1; padding: 16px; border: 2px solid var(--border-color); border-radius: var(--radius-md); text-align: center; cursor: pointer; transition: all 0.3s; background: var(--bg-white); }
+        .payment-option:hover { border-color: var(--primary-color); }
+        .payment-option.selected { border-color: var(--primary-color); background: rgba(26, 115, 232, 0.1); }
+        .payment-option img { height: 32px; margin-bottom: 8px; object-fit: contain; }
+        .payment-option span { display: block; font-weight: 600; margin-bottom: 4px; }
+        .payment-phone { font-size: var(--font-size-sm); font-weight: 700; color: var(--primary-color); }
+        .payment-option.selected .payment-phone { color: var(--primary-color); }
+        .payment-options { display: flex; gap: 12px; flex-wrap: wrap; }
+        
+        .document-types { display: flex; gap: 10px; margin-top: 8px; }
+        .document-type {
+            flex: 1;
+            padding: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--bg-white);
+        }
+        .document-type:hover { border-color: var(--primary-color); }
+        .document-type.selected { border-color: var(--primary-color); background: rgba(26, 115, 232, 0.1); }
+        .document-type i { font-size: 24px; color: var(--primary-color); margin-bottom: 8px; }
+        .document-type span { display: block; font-weight: 600; font-size: var(--font-size-sm); }
+        .document-field { animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .support-section { padding: 60px 0; background: var(--bg-gray); }
+        .support-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .support-card { background: var(--bg-white); padding: 30px; border-radius: var(--radius-lg); text-align: center; transition: all 0.3s; cursor: pointer; border: 2px solid transparent; }
+        .support-card:hover { transform: translateY(-5px); border-color: var(--primary-color); box-shadow: var(--shadow-lg); }
+        .support-icon { width: 70px; height: 70px; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 28px; }
+        .support-card h4 { font-size: var(--font-size-base); font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+        .support-card p { font-size: var(--font-size-sm); color: var(--text-light); }
+
+        @media (max-width: 992px) {
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+            .team-grid { grid-template-columns: repeat(3, 1fr); }
+            .vf-grid { grid-template-columns: repeat(2, 1fr); }
+            .vf-btn { grid-column: span 2; }
+            .main-content-wrapper { flex-direction: column; }
+            .sidebar-search { width: 100%; }
+            .sidebar-search-box { position: static; }
+            .support-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 576px) {
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .payment-options { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-top-content">
+                        <div class="header-top-left">
+                            <span class="contact-item"><i class="fas fa-phone-alt"></i> (01) 234-5678</span>
+                            <span class="contact-item"><i class="fab fa-whatsapp"></i> 927 456 789</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-main">
+                <div class="container">
+                    <div class="header-main-content">
+                        <a href="index7.html" class="logo">
+                            <div class="logo-icon"><i class="fas fa-car-battery"></i></div>
+                            <div class="logo-text"><span class="logo-name">Leandro</span><span class="logo-slogan">Baterías</span></div>
+                        </a>
+
+                        <div class="search-container">
+                            <div class="search-box">
+                                <input type="text" id="search-input" class="search-input" placeholder="Buscar batería...">
+                                <button id="search-button" class="search-button"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="header-actions">
+                            <button id="btn-cart" class="header-action-btn cart-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="action-badge cart-count">0</span>
+                                <span class="cart-total">S/ 0.00</span>
+                            </button>
+                            <div id="mini-cart" class="mini-cart hidden">
+                                <div class="mini-cart-header">
+                                    <h4>Mi Carrito</h4>
+                                    <button id="close-mini-cart"><i class="fas fa-times"></i></button>
+                                </div>
+                                <div id="mini-cart-items" class="mini-cart-items"></div>
+                                <div class="mini-cart-footer">
+                                    <div class="mini-cart-total">
+                                        <span>Total:</span>
+                                        <span id="mini-cart-total">S/ 0.00</span>
+                                    </div>
+                                    <button class="btn btn-primary btn-block" onclick="openCheckoutModal()">Finalizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="header-nav">
+                <div class="container">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#inicio" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                        <li class="nav-item"><a href="#baterias" class="nav-link"><i class="fas fa-list"></i> Catálogo</a></li>
+                        <li class="nav-item"><a href="#equipo" class="nav-link"><i class="fas fa-users"></i> Equipo</a></li>
+                        <li class="nav-item"><a href="#dashboard" class="nav-link"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                        <li class="nav-item"><a href="#soporte" class="nav-link"><i class="fas fa-headset"></i> Soporte</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <section id="inicio" class="hero">
+            <div class="hero-slider">
+                <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80')">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <span class="hero-tag">Baterías de Calidad</span>
+                        <h1>Las Mejores Baterías para tu Auto</h1>
+                        <p>6 marcas disponibles con garantía oficial</p>
+                        <div class="hero-cta">
+                            <a href="#baterias" class="btn btn-primary btn-lg">Ver Catálogo</a>
+                        </div>
+                        <div class="hero-features">
+                            <div class="hero-feature"><i class="fas fa-shipping-fast"></i><span>Envío gratis +S/200</span></div>
+                            <div class="hero-feature"><i class="fas fa-shield-alt"></i><span>Garantía 24 meses</span></div>
+                            <div class="hero-feature"><i class="fas fa-tools"></i><span>Instalación gratis</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vehicle-finder-section">
+            <div class="container">
+                <div class="vehicle-finder-box">
+                    <h3 class="vehicle-finder-title">Encuentra la Batería para tu Auto</h3>
+                    <div class="vf-grid">
+                        <div class="vf-field">
+                            <label>Marca</label>
+                            <select id="vf-marca">
+                                <option value="">Seleccionar...</option>
+                                <option value="toyota">Toyota</option>
+                                <option value="honda">Honda</option>
+                                <option value="hyundai">Hyundai</option>
+                                <option value="chevrolet">Chevrolet</option>
+                                <option value="ford">Ford</option>
+                                <option value="nissan">Nissan</option>
+                                <option value="kia">Kia</option>
+                                <option value="mazda">Mazda</option>
+                                <option value="volkswagen">Volkswagen</option>
+                                <option value="mitsubishi">Mitsubishi</option>
+                            </select>
+                        </div>
+                        <div class="vf-field">
+                            <label>Modelo</label>
+                            <select id="vf-modelo" disabled>
+                                <option value="">Seleccionar...</option>
+                            </select>
+                        </div>
+                        <div class="vf-field">
+                            <label>Año</label>
+                            <select id="vf-anio" disabled>
+                                <option value="">Seleccionar...</option>
+                            </select>
+                        </div>
+                        <div class="vf-field">
+                            <label>Tipo</label>
+                            <select id="vf-tipo" disabled>
+                                <option value="">Seleccionar...</option>
+                            </select>
+                        </div>
+                        <div class="vf-btn">
+                            <button class="btn btn-secondary" onclick="buscarBateria()">
+                                <i class="fas fa-search"></i> Buscar Batería
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="dashboard-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Panel de Control</h2>
+                    <p>Resumen del inventario y ventas</p>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Total Baterías</h3>
+                        <div class="value">57</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Stock Bajo</h3>
+                        <div class="value">5</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Ventas del Mes</h3>
+                        <div class="value positive">S/ 15,800</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Pedidos</h3>
+                        <div class="value">24</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="baterias" class="brand-filter-section">
+            <div class="container">
+                <h2 class="brand-filter-title">Selecciona una Marca</h2>
+                <div class="brand-buttons">
+                    <button class="brand-btn active" data-marca="todos"><span>Todas</span><span class="brand-count"></span></button>
+                    <button class="brand-btn" data-marca="Solite"><span>Solite</span><span class="brand-count"></span></button>
+                    <button class="brand-btn" data-marca="Enerjet"><span>Enerjet</span><span class="brand-count"></span></button>
+                    <button class="brand-btn" data-marca="Etna"><span>Etna</span><span class="brand-count"></span></button>
+                    <button class="brand-btn" data-marca="Ultrabat"><span>Ultrabat</span><span class="brand-count"></span></button>
+                    <button class="brand-btn" data-marca="Varta"><span>Varta</span><span class="brand-count"></span></button>
+                    <button class="brand-btn" data-marca="Capsa"><span>Capsa</span><span class="brand-count"></span></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-products" style="padding: 40px 0;">
+            <div class="container">
+                <div class="main-content-wrapper">
+                    <div class="sidebar-search">
+                        <div class="sidebar-search-box">
+                            <h3><i class="fas fa-search"></i> Buscar Batería</h3>
+                            <input type="text" id="sidebar-search" class="sidebar-search-input" placeholder="Nombre, marca, voltaje...">
+                            <div id="sidebar-results" class="sidebar-search-results"></div>
+                        </div>
+                    </div>
+                    <div class="products-area">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <h2 id="products-title">Todas las Baterías</h2>
+                                <p id="products-count">57 productos disponibles</p>
+                            </div>
+                        </div>
+                        <div id="products-grid" class="products-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipo" class="team-section">
+            <div class="container">
+                <div class="section-header" style="text-align: center; margin-bottom: 40px;">
+                    <h2>Nuestro Equipo de Trabajo</h2>
+                    <p>Metodología Scrum - Leandro Baterías</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member product-owner">
+                        <div class="team-avatar"><i class="fas fa-user-tie"></i></div>
+                        <h4>Baca Medina</h4>
+                        <span class="team-role">Product Owner</span>
+                    </div>
+                    <div class="team-member scrum-master">
+                        <div class="team-avatar"><i class="fas fa-chess-king"></i></div>
+                        <h4>Cahuana Mendoza</h4>
+                        <span class="team-role">Scrum Master</span>
+                    </div>
+                    <div class="team-member devteam">
+                        <div class="team-avatar"><i class="fas fa-code"></i></div>
+                        <h4>Bonifacio Ruiz</h4>
+                        <span class="team-role">DevTeam</span>
+                    </div>
+                    <div class="team-member devteam">
+                        <div class="team-avatar"><i class="fas fa-laptop-code"></i></div>
+                        <h4>Llanos Luna</h4>
+                        <span class="team-role">DevTeam</span>
+                    </div>
+                    <div class="team-member sponsor">
+                        <div class="team-avatar"><i class="fas fa-handshake"></i></div>
+                        <h4>Medina Carpio Alexsander</h4>
+                        <span class="team-role">Patrocinador</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="soporte" class="support-section">
+            <div class="container">
+                <div class="section-header" style="text-align: center; margin-bottom: 40px;">
+                    <h2>Soporte y Atención</h2>
+                    <p>Estamos para ayudarte</p>
+                </div>
+                <div class="support-grid">
+                    <a href="pages/contacto.html" class="support-card" style="text-decoration: none; display: block;">
+                        <div class="support-icon"><i class="fas fa-headset"></i></div>
+                        <h4>Contacto</h4>
+                        <p>Chatea con nosotros</p>
+                    </a>
+                    <a href="#" onclick="alert('Llama al: (01) 234-5678'); return false;" class="support-card" style="text-decoration: none; display: block;">
+                        <div class="support-icon"><i class="fas fa-phone-alt"></i></div>
+                        <h4>Llámanos</h4>
+                        <p>Atención inmediata</p>
+                    </a>
+                    <a href="#" onclick="window.open('https://wa.me/51927456789', '_blank'); return false;" class="support-card" style="text-decoration: none; display: block;">
+                        <div class="support-icon"><i class="fab fa-whatsapp"></i></div>
+                        <h4>WhatsApp</h4>
+                        <p>Envíanos un mensaje</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-main">
+                <div class="container">
+                    <div class="footer-grid">
+                        <div class="footer-col footer-about">
+                            <div class="footer-logo">
+                                <div class="logo-icon"><i class="fas fa-car-battery"></i></div>
+                                <div class="logo-text"><span class="logo-name">Leandro</span><span class="logo-slogan">Baterías</span></div>
+                            </div>
+                            <p>Líderes en baterías automotrices en Perú.</p>
+                        </div>
+                        <div class="footer-col">
+                            <h4>Contacto</h4>
+                            <ul class="footer-contact">
+                                <li><i class="fas fa-map-marker-alt"></i> Av. Principal 1234, Lima</li>
+                                <li><i class="fas fa-phone-alt"></i> (01) 234-5678</li>
+                                <li><i class="fab fa-whatsapp"></i> 927 456 789</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container"><p>&copy; 2026 Leandro Baterías.</p></div>
+            </div>
+        </footer>
+    </div>
+
+    <button class="theme-toggle" id="theme-toggle" title="Cambiar modo"><i class="fas fa-moon"></i></button>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <div id="checkout-modal" class="modal hidden">
+        <div class="modal-content checkout-modal">
+            <button class="modal-close" onclick="closeCheckoutModal()"><i class="fas fa-times"></i></button>
+            <div id="modal-body">
+                <h2 style="text-align:center;margin-bottom:20px;"><i class="fas fa-shopping-bag"></i> Finalizar Compra</h2>
+                <div id="checkout-items"></div>
+                <div class="checkout-summary">
+                    <div class="checkout-item"><span>Subtotal:</span><span id="checkout-subtotal">S/ 0.00</span></div>
+                    <div class="checkout-item"><span>IGV (18%):</span><span id="checkout-igv">S/ 0.00</span></div>
+                    <div class="checkout-total"><span>Total:</span><span id="checkout-total">S/ 0.00</span></div>
+                </div>
+                <div class="payment-section">
+                    <h4>Método de Pago</h4>
+                    <div class="payment-options">
+                        <div class="payment-option selected" data-method="yape" onclick="selectPayment(this)">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Icono_de_la_aplicaci%C3%B3n_Yape.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original" alt="Yape">
+                            <span>Yape</span>
+                            <div class="payment-phone">927 456 789</div>
+                        </div>
+                        <div class="payment-option" data-method="plin" onclick="selectPayment(this)">
+                            <img src="https://images.seeklogo.com/logo-png/38/1/plin-logo-png_seeklogo-386806.png" alt="Plin">
+                            <span>Plin</span>
+                            <div class="payment-phone">927 456 789</div>
+                        </div>
+                        <div class="payment-option" data-method="tarjeta" onclick="selectPayment(this)">
+                            <img src="https://www.footloose.pe/arquivos/ids/1369498/logos-de-bancos-min.jpg" alt="Tarjeta">
+                            <span>Tarjeta</span>
+                            <div class="payment-phone">Pago con tarjeta</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:16px;">
+                    <label class="form-label">Nombre / Razón Social *</label>
+                    <input type="text" id="checkout-cliente" class="form-input" placeholder="Nombre completo o empresa">
+                </div>
+                <div style="margin-top:12px;">
+                    <label class="form-label">Teléfono *</label>
+                    <input type="tel" id="checkout-telefono" class="form-input" placeholder="9 dígitos">
+                </div>
+                <div style="margin-top:16px;">
+                    <label class="form-label">Tipo de Comprobante *</label>
+                    <div class="document-types">
+                        <div class="document-type selected" data-type="comprobante" onclick="selectDocumentType(this)">
+                            <i class="fas fa-receipt"></i>
+                            <span>Comprobante</span>
+                        </div>
+                        <div class="document-type" data-type="boleta" onclick="selectDocumentType(this)">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Boleta</span>
+                        </div>
+                        <div class="document-type" data-type="factura" onclick="selectDocumentType(this)">
+                            <i class="fas fa-file-invoice"></i>
+                            <span>Factura</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="dni-field" class="document-field hidden" style="margin-top:12px;">
+                    <label class="form-label">DNI *</label>
+                    <input type="text" id="checkout-dni" class="form-input" placeholder="8 dígitos" maxlength="8">
+                </div>
+                <div id="ruc-field" class="document-field hidden" style="margin-top:12px;">
+                    <label class="form-label">RUC *</label>
+                    <input type="text" id="checkout-ruc" class="form-input" placeholder="11 dígitos" maxlength="11">
+                    <div style="margin-top:12px;">
+                        <label class="form-label">Dirección (opcional)</label>
+                        <input type="text" id="checkout-direccion" class="form-input" placeholder="Dirección fiscal">
+                    </div>
+                </div>
+                <div id="operacion-field" style="margin-top:12px;">
+                    <label class="form-label">N° Operación / Código de pago</label>
+                    <input type="text" id="checkout-operacion" class="form-input" placeholder="Código de transacción">
+                </div>
+                <div id="tarjeta-fields" class="hidden" style="margin-top:12px;">
+                    <label class="form-label">Número de Tarjeta *</label>
+                    <input type="text" id="checkout-tarjeta" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19">
+                    <div style="display:flex;gap:12px;margin-top:12px;">
+                        <div style="flex:1;">
+                            <label class="form-label">MM/AA</label>
+                            <input type="text" id="checkout-expiry" class="form-input" placeholder="12/25" maxlength="5">
+                        </div>
+                        <div style="flex:1;">
+                            <label class="form-label">CVV</label>
+                            <input type="text" id="checkout-cvv" class="form-input" placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" style="margin-top:20px;padding:16px;" onclick="confirmPurchase()">
+                    <i class="fas fa-check-circle"></i> Confirmar y Descargar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils/storage.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/utils/format.js"></script>
+    <script src="js/components/modal.js"></script>
+    <script src="js/components/carrito.js"></script>
+    <script src="js/components/producto-card.js"></script>
+    <script>
+        const allProducts = [
+            { idBateria: 1, nombre: 'Batería Solite 40B19L', marca: 'Solite', voltaje: '12', amperaje: '35', potenciaArranque: '300 CCA', precio: 270.00, precioAnterior: null, stockActual: 15, destacada: false, garantiaMeses: 12, imagenUrl: 'https://www.boliche.cl/wp-content/uploads/2019/12/8809376160019.jpg' },
+            { idBateria: 2, nombre: 'Batería Solite 42B19L', marca: 'Solite', voltaje: '12', amperaje: '42', potenciaArranque: '400 CCA', precio: 280.00, precioAnterior: null, stockActual: 18, destacada: true, garantiaMeses: 12, imagenUrl: 'https://bateriaskallpa.com/wp-content/uploads/2023/09/solite-42B19L.jpg' },
+            { idBateria: 3, nombre: 'Batería Solite 50B19L', marca: 'Solite', voltaje: '12', amperaje: '50', potenciaArranque: '450 CCA', precio: 300.00, precioAnterior: null, stockActual: 15, destacada: true, garantiaMeses: 18, imagenUrl: 'https://bateriaskallpa.com/wp-content/uploads/2023/09/solite-65B24L.jpg' },
+            { idBateria: 4, nombre: 'Batería Solite 55B24L', marca: 'Solite', voltaje: '12', amperaje: '55', potenciaArranque: '500 CCA', precio: 320.00, precioAnterior: null, stockActual: 12, destacada: true, garantiaMeses: 18, imagenUrl: 'https://bateriaskallpa.com/wp-content/uploads/2023/09/solite-55B24LS.jpg' },
+            { idBateria: 5, nombre: 'Batería Solite 75D23L', marca: 'Solite', voltaje: '12', amperaje: '75', potenciaArranque: '700 CCA', precio: 430.00, precioAnterior: null, stockActual: 10, destacada: true, garantiaMeses: 18, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BSO0034-768x745.jpg' },
+            { idBateria: 6, nombre: 'Batería Solite 105D31L', marca: 'Solite', voltaje: '12', amperaje: '105', potenciaArranque: '900 CCA', precio: 480.00, precioAnterior: null, stockActual: 8, destacada: true, garantiaMeses: 24, imagenUrl: 'https://www.daitocar.cl/wp-content/uploads/2025/06/bas206-l.webp' },
+            { idBateria: 7, nombre: 'Batería Solite CMF55066', marca: 'Solite', voltaje: '12', amperaje: '55', potenciaArranque: '550 CCA', precio: 380.00, precioAnterior: null, stockActual: 10, destacada: false, garantiaMeses: 18, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BSO0047-768x726.jpg' },
+            { idBateria: 8, nombre: 'Batería Solite CMF56219', marca: 'Solite', voltaje: '12', amperaje: '62', potenciaArranque: '600 CCA', precio: 400.00, precioAnterior: null, stockActual: 8, destacada: false, garantiaMeses: 18, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BSO0052-768x706.jpg' },
+            { idBateria: 9, nombre: 'Batería Solite CMF57412', marca: 'Solite', voltaje: '12', amperaje: '74', potenciaArranque: '720 CCA', precio: 480.00, precioAnterior: null, stockActual: 6, destacada: true, garantiaMeses: 24, imagenUrl: 'https://bateriaskallpa.com/wp-content/uploads/2023/09/Solite-CMF57412-15-PLACAS-600x600.jpg' },
+            { idBateria: 10, nombre: 'Batería Enerjet 11D56', marca: 'Enerjet', voltaje: '12', amperaje: '11', potenciaArranque: '110 CCA', precio: 290.00, precioAnterior: null, stockActual: 20, destacada: false, garantiaMeses: 12, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2F11d56p.jpg&w=3840&q=75' },
+            { idBateria: 11, nombre: 'Batería Enerjet 11T56', marca: 'Enerjet', voltaje: '12', amperaje: '11', potenciaArranque: '120 CCA', precio: 320.00, precioAnterior: null, stockActual: 18, destacada: false, garantiaMeses: 12, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2Fffff.png&w=3840&q=75' },
+            { idBateria: 12, nombre: 'Batería Enerjet 11W75', marca: 'Enerjet', voltaje: '12', amperaje: '11', potenciaArranque: '130 CCA', precio: 320.00, precioAnterior: null, stockActual: 15, destacada: false, garantiaMeses: 12, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2F11w63.jpg&w=3840&q=75' },
+            { idBateria: 13, nombre: 'Batería Enerjet 13W75', marca: 'Enerjet', voltaje: '12', amperaje: '13', potenciaArranque: '200 CCA', precio: 340.00, precioAnterior: null, stockActual: 14, destacada: false, garantiaMeses: 15, imagenUrl: 'https://media.falabella.com/sodimacPE/1839632_01/w=1004,h=1500,fit=pad' },
+            { idBateria: 14, nombre: 'Batería Enerjet 13S85', marca: 'Enerjet', voltaje: '12', amperaje: '13', potenciaArranque: '220 CCA', precio: 380.00, precioAnterior: null, stockActual: 12, destacada: true, garantiaMeses: 15, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2Fbaa0000019.png&w=3840&q=75' },
+            { idBateria: 15, nombre: 'Batería Enerjet 15M99', marca: 'Enerjet', voltaje: '12', amperaje: '15', potenciaArranque: '250 CCA', precio: 430.00, precioAnterior: null, stockActual: 10, destacada: true, garantiaMeses: 18, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2F15m99.png&w=3840&q=75' },
+            { idBateria: 16, nombre: 'Batería Enerjet 15MB90', marca: 'Enerjet', voltaje: '12', amperaje: '15', potenciaArranque: '260 CCA', precio: 410.00, precioAnterior: null, stockActual: 12, destacada: true, garantiaMeses: 18, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2Fbaa0000107.png&w=3840&q=75' },
+            { idBateria: 17, nombre: 'Batería Enerjet 17T114', marca: 'Enerjet', voltaje: '12', amperaje: '17', potenciaArranque: '300 CCA', precio: 510.00, precioAnterior: null, stockActual: 8, destacada: true, garantiaMeses: 18, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2F17t114.jpg&w=3840&q=75' },
+            { idBateria: 18, nombre: 'Batería Enerjet 19P130', marca: 'Enerjet', voltaje: '12', amperaje: '19', potenciaArranque: '350 CCA', precio: 610.00, precioAnterior: null, stockActual: 6, destacada: true, garantiaMeses: 24, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2F19p130.jpg&w=3840&q=75' },
+            { idBateria: 19, nombre: 'Batería Enerjet 23P159', marca: 'Enerjet', voltaje: '12', amperaje: '23', potenciaArranque: '400 CCA', precio: 670.00, precioAnterior: null, stockActual: 5, destacada: true, garantiaMeses: 24, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2Fbaa0000011.png&w=3840&q=75' },
+            { idBateria: 20, nombre: 'Batería Enerjet 25P170', marca: 'Enerjet', voltaje: '12', amperaje: '25', potenciaArranque: '450 CCA', precio: 730.00, precioAnterior: null, stockActual: 4, destacada: true, garantiaMeses: 24, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2Fbaa0000012.png&w=3840&q=75' },
+            { idBateria: 21, nombre: 'Batería Enerjet 27P190', marca: 'Enerjet', voltaje: '12', amperaje: '27', potenciaArranque: '500 CCA', precio: 770.00, precioAnterior: null, stockActual: 4, destacada: true, garantiaMeses: 24, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2Fbaa0000235.png&w=3840&q=75' },
+            { idBateria: 22, nombre: 'Batería Enerjet 33P224', marca: 'Enerjet', voltaje: '12', amperaje: '33', potenciaArranque: '600 CCA', precio: 900.00, precioAnterior: null, stockActual: 3, destacada: true, garantiaMeses: 24, imagenUrl: 'https://www.enerjet.com.pe/_next/image?url=https%3A%2F%2Fwww.enerjet.com.pe%2Fadmin%2Fuploads%2Fbaa0000106.png&w=3840&q=75' },
+            { idBateria: 23, nombre: 'Batería Etna HL-11', marca: 'Etna', voltaje: '12', amperaje: '45', potenciaArranque: '450 CCA', precio: 280.00, precioAnterior: null, stockActual: 15, destacada: false, garantiaMeses: 12, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BET0032.png' },
+            { idBateria: 24, nombre: 'Batería Etna FF-11', marca: 'Etna', voltaje: '12', amperaje: '45', potenciaArranque: '450 CCA', precio: 300.00, precioAnterior: null, stockActual: 14, destacada: false, garantiaMeses: 12, imagenUrl: 'https://promart.vteximg.com.br/arquivos/ids/6963206-380-380/150232.jpg?v=638182350717800000' },
+            { idBateria: 25, nombre: 'Batería Etna FF-13', marca: 'Etna', voltaje: '12', amperaje: '55', potenciaArranque: '550 CCA', precio: 320.00, precioAnterior: null, stockActual: 12, destacada: true, garantiaMeses: 15, imagenUrl: 'https://promart.vteximg.com.br/arquivos/ids/6963205-380-380/150233.jpg?v=638182350679130000' },
+            { idBateria: 26, nombre: 'Batería Etna W-13', marca: 'Etna', voltaje: '12', amperaje: '55', potenciaArranque: '550 CCA', precio: 330.00, precioAnterior: null, stockActual: 12, destacada: true, garantiaMeses: 15, imagenUrl: 'https://promart.vteximg.com.br/arquivos/ids/6888016-380-380/149962.jpg?v=638155766389300000' },
+            { idBateria: 27, nombre: 'Batería Etna V-13NOR', marca: 'Etna', voltaje: '12', amperaje: '60', potenciaArranque: '600 CCA', precio: 370.00, precioAnterior: null, stockActual: 10, destacada: true, garantiaMeses: 18, imagenUrl: 'https://promart.vteximg.com.br/arquivos/ids/6888022-380-380/149972.jpg?v=638155766581970000' },
+            { idBateria: 28, nombre: 'Batería Etna FH-1215NOR', marca: 'Etna', voltaje: '12', amperaje: '65', potenciaArranque: '650 CCA', precio: 400.00, precioAnterior: null, stockActual: 8, destacada: true, garantiaMeses: 18, imagenUrl: 'https://promart.vteximg.com.br/arquivos/ids/6888017-380-380/149971.jpg?v=638155766421900000' },
+            { idBateria: 29, nombre: 'Batería Etna S-1215EM', marca: 'Etna', voltaje: '12', amperaje: '70', potenciaArranque: '700 CCA', precio: 380.00, precioAnterior: null, stockActual: 8, destacada: false, garantiaMeses: 18, imagenUrl: 'https://promart.vteximg.com.br/arquivos/ids/6888019-380-380/149970.jpg?v=638155766487900000' },
+            { idBateria: 30, nombre: 'Batería Etna SU-1217', marca: 'Etna', voltaje: '12', amperaje: '75', potenciaArranque: '750 CCA', precio: 480.00, precioAnterior: null, stockActual: 6, destacada: true, garantiaMeses: 24, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BET0093.png' },
+            { idBateria: 31, nombre: 'Batería Etna S-1219', marca: 'Etna', voltaje: '12', amperaje: '85', potenciaArranque: '850 CCA', precio: 580.00, precioAnterior: null, stockActual: 5, destacada: true, garantiaMeses: 24, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BET0112.png' },
+            { idBateria: 32, nombre: 'Batería Etna S-1223 N/I', marca: 'Etna', voltaje: '12', amperaje: '95', potenciaArranque: '950 CCA', precio: 630.00, precioAnterior: null, stockActual: 4, destacada: true, garantiaMeses: 24, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BET0112.png' },
+            { idBateria: 33, nombre: 'Batería Ultrabat HL-55', marca: 'Ultrabat', voltaje: '12', amperaje: '55', potenciaArranque: '550 CCA', precio: 250.00, precioAnterior: null, stockActual: 15, destacada: false, garantiaMeses: 12, imagenUrl: 'https://elgatobaterias.com/wp-content/uploads/2025/07/HL-55N.jpg' },
+            { idBateria: 34, nombre: 'Batería Ultrabat FF-66', marca: 'Ultrabat', voltaje: '12', amperaje: '66', potenciaArranque: '660 CCA', precio: 280.00, precioAnterior: null, stockActual: 12, destacada: false, garantiaMeses: 18, imagenUrl: 'https://elgatobaterias.com/wp-content/uploads/2025/07/FF66-N.jpg' },
+            { idBateria: 35, nombre: 'Batería Ultrabat W-70N', marca: 'Ultrabat', voltaje: '12', amperaje: '70', potenciaArranque: '700 CCA', precio: 290.00, precioAnterior: null, stockActual: 10, destacada: false, garantiaMeses: 18, imagenUrl: 'https://elgatobaterias.com/wp-content/uploads/2025/07/W-70N-300x300.jpg' },
+            { idBateria: 36, nombre: 'Batería Ultrabat V-82N', marca: 'Ultrabat', voltaje: '12', amperaje: '82', potenciaArranque: '820 CCA', precio: 330.00, precioAnterior: null, stockActual: 8, destacada: true, garantiaMeses: 24, imagenUrl: 'https://elgatobaterias.com/wp-content/uploads/2025/07/V-82I-300x300.jpg' },
+            { idBateria: 37, nombre: 'Batería Ultrabat S-96I', marca: 'Ultrabat', voltaje: '12', amperaje: '96', potenciaArranque: '960 CCA', precio: 360.00, precioAnterior: null, stockActual: 6, destacada: true, garantiaMeses: 24, imagenUrl: 'https://elgatobaterias.com/wp-content/uploads/2025/07/S96-I.jpg' },
+            { idBateria: 38, nombre: 'Batería Varta 27R V5 1300', marca: 'Varta', voltaje: '12', amperaje: '75', potenciaArranque: '1300 CCA', precio: 520.00, precioAnterior: null, stockActual: 8, destacada: true, garantiaMeses: 24, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BVA0027.png' },
+            { idBateria: 39, nombre: 'Batería Varta 31T V4 1400', marca: 'Varta', voltaje: '12', amperaje: '95', potenciaArranque: '1400 CCA', precio: 550.00, precioAnterior: null, stockActual: 6, destacada: true, garantiaMeses: 24, imagenUrl: 'https://api.implementos.com.pe/file/sku/1000/CAPBAT0004_1.jpg' },
+            { idBateria: 40, nombre: 'Batería Varta 35 V4 850', marca: 'Varta', voltaje: '12', amperaje: '60', potenciaArranque: '850 CCA', precio: 400.00, precioAnterior: null, stockActual: 10, destacada: false, garantiaMeses: 18, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BVA0030-768x768.png' },
+            { idBateria: 41, nombre: 'Batería Varta 42IST V4 870', marca: 'Varta', voltaje: '12', amperaje: '42', potenciaArranque: '870 CCA', precio: 380.00, precioAnterior: null, stockActual: 12, destacada: false, garantiaMeses: 18, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BVA0016.jpg' },
+            { idBateria: 42, nombre: 'Batería Varta 42IST V5 950', marca: 'Varta', voltaje: '12', amperaje: '42', potenciaArranque: '950 CCA', precio: 420.00, precioAnterior: null, stockActual: 10, destacada: true, garantiaMeses: 18, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BVA0046-768x768.png' },
+            { idBateria: 43, nombre: 'Batería Varta 48IST V5 1150', marca: 'Varta', voltaje: '12', amperaje: '48', potenciaArranque: '1150 CCA', precio: 460.00, precioAnterior: null, stockActual: 8, destacada: true, garantiaMeses: 24, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BVA0007-768x768.png' },
+            { idBateria: 44, nombre: 'Batería Varta 49ST V4 1250', marca: 'Varta', voltaje: '12', amperaje: '75', potenciaArranque: '1250 CCA', precio: 550.00, precioAnterior: null, stockActual: 6, destacada: true, garantiaMeses: 24, imagenUrl: 'https://ditesac.com/wp-content/uploads/2024/09/BVA0031-49STV41250-3-768x768.jpg' },
+            { idBateria: 45, nombre: 'Batería Varta 4DLTI V4 1500', marca: 'Varta', voltaje: '12', amperaje: '150', potenciaArranque: '1500 CCA', precio: 730.00, precioAnterior: null, stockActual: 4, destacada: true, garantiaMeses: 24, imagenUrl: 'https://api.implementos.com.pe/file/sku/1000/VARBAT3003_1.jpg' },
+            { idBateria: 46, nombre: 'Batería Varta 8DI V4 2650', marca: 'Varta', voltaje: '12', amperaje: '200', potenciaArranque: '2650 CCA', precio: 950.00, precioAnterior: null, stockActual: 3, destacada: true, garantiaMeses: 24, imagenUrl: 'https://api.implementos.com.pe/file/sku/1000/VARBAT3002_1.jpg' },
+            { idBateria: 47, nombre: 'Batería Capsa U1R 500', marca: 'Capsa', voltaje: '12', amperaje: '45', potenciaArranque: '500 CCA', precio: 200.00, precioAnterior: null, stockActual: 10, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/U1R-500.png' },
+            { idBateria: 48, nombre: 'Batería Capsa NS40L 670', marca: 'Capsa', voltaje: '12', amperaje: '40', potenciaArranque: '670 CCA', precio: 280.00, precioAnterior: null, stockActual: 12, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2021/04/NS40L550.png' },
+            { idBateria: 49, nombre: 'Batería Capsa NS60L 700', marca: 'Capsa', voltaje: '12', amperaje: '60', potenciaArranque: '700 CCA', precio: 300.00, precioAnterior: null, stockActual: 8, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2021/04/NS60LS700.png' },
+            { idBateria: 50, nombre: 'Batería Capsa NS60L 770', marca: 'Capsa', voltaje: '12', amperaje: '60', potenciaArranque: '770 CCA', precio: 320.00, precioAnterior: null, stockActual: 8, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/NS60LS-770.png' },
+            { idBateria: 51, nombre: 'Batería Capsa 42I 800', marca: 'Capsa', voltaje: '12', amperaje: '42', potenciaArranque: '800 CCA', precio: 315.00, precioAnterior: null, stockActual: 10, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/42I-800.png' },
+            { idBateria: 52, nombre: 'Batería Capsa 42I 900', marca: 'Capsa', voltaje: '12', amperaje: '42', potenciaArranque: '900 CCA', precio: 320.00, precioAnterior: null, stockActual: 10, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/42-900.png' },
+            { idBateria: 53, nombre: 'Batería Capsa 24R 950', marca: 'Capsa', voltaje: '12', amperaje: '70', potenciaArranque: '950 CCA', precio: 350.00, precioAnterior: null, stockActual: 8, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/11/24R-1100.png' },
+            { idBateria: 54, nombre: 'Batería Capsa 27R 1150', marca: 'Capsa', voltaje: '12', amperaje: '80', potenciaArranque: '1150 CCA', precio: 430.00, precioAnterior: null, stockActual: 6, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/27R-1150.png' },
+            { idBateria: 55, nombre: 'Batería Capsa 27 1150', marca: 'Capsa', voltaje: '12', amperaje: '80', potenciaArranque: '1150 CCA', precio: 430.00, precioAnterior: null, stockActual: 6, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/27-1150.png' },
+            { idBateria: 56, nombre: 'Batería Capsa 30H 1600', marca: 'Capsa', voltaje: '12', amperaje: '90', potenciaArranque: '1600 CCA', precio: 490.00, precioAnterior: null, stockActual: 5, destacada: true, garantiaMeses: 18, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/30H-1600.png' },
+            { idBateria: 57, nombre: 'Batería Capsa 31T 1600', marca: 'Capsa', voltaje: '12', amperaje: '95', potenciaArranque: '1600 CCA', precio: 500.00, precioAnterior: null, stockActual: 4, destacada: true, garantiaMeses: 18, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/31T-1600.png' },
+            { idBateria: 58, nombre: 'Batería Capsa 35 1100', marca: 'Capsa', voltaje: '12', amperaje: '65', potenciaArranque: '1100 CCA', precio: 370.00, precioAnterior: null, stockActual: 6, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/35-1100.png' },
+            { idBateria: 59, nombre: 'Batería Capsa 36IMX 770', marca: 'Capsa', voltaje: '12', amperaje: '65', potenciaArranque: '770 CCA', precio: 290.00, precioAnterior: null, stockActual: 8, destacada: false, garantiaMeses: 12, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/36I-650.png' },
+            { idBateria: 60, nombre: 'Batería Capsa 65 1100', marca: 'Capsa', voltaje: '12', amperaje: '75', potenciaArranque: '1100 CCA', precio: 520.00, precioAnterior: null, stockActual: 5, destacada: true, garantiaMeses: 18, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/65-1100.png' },
+            { idBateria: 61, nombre: 'Batería Capsa 4D 1800', marca: 'Capsa', voltaje: '12', amperaje: '180', potenciaArranque: '1800 CCA', precio: 680.00, precioAnterior: null, stockActual: 4, destacada: true, garantiaMeses: 24, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/4D1800.png' },
+            { idBateria: 62, nombre: 'Batería Capsa 4D 2000', marca: 'Capsa', voltaje: '12', amperaje: '200', potenciaArranque: '2000 CCA', precio: 700.00, precioAnterior: null, stockActual: 3, destacada: true, garantiaMeses: 24, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/4D2000.png' },
+            { idBateria: 63, nombre: 'Batería Capsa 8DI 2600', marca: 'Capsa', voltaje: '12', amperaje: '260', potenciaArranque: '2600 CCA', precio: 850.00, precioAnterior: null, stockActual: 2, destacada: true, garantiaMeses: 24, imagenUrl: 'https://bateriascapsa.com/wp-content/uploads/2025/09/8DI-2600.png' }
+        ];
+
+        window.productosDisponibles = allProducts;
+
+        const brandCounts = { todos: allProducts.length };
+        allProducts.forEach(p => { brandCounts[p.marca] = (brandCounts[p.marca] || 0) + 1; });
+        document.querySelectorAll('.brand-btn').forEach(btn => {
+            const marca = btn.dataset.marca;
+            const countSpan = btn.querySelector('.brand-count');
+            if (countSpan && brandCounts[marca]) countSpan.textContent = `(${brandCounts[marca]})`;
+        });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark-mode');
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        function filterByMarca(marca) {
+            const filtered = marca === 'todos' ? allProducts : allProducts.filter(p => p.marca === marca);
+            document.getElementById('products-title').textContent = marca === 'todos' ? 'Todas las Baterías' : `Baterías ${marca}`;
+            document.getElementById('products-count').textContent = `${filtered.length} productos disponibles`;
+            ProductCard.renderGrid(filtered, 'products-grid');
+            document.querySelectorAll('.brand-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.marca === marca));
+        }
+        document.querySelectorAll('.brand-btn').forEach(btn => btn.addEventListener('click', () => filterByMarca(btn.dataset.marca)));
+
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        function performSearch(query) {
+            const term = query.toLowerCase().trim();
+            if (!term) { filterByMarca('todos'); return; }
+            const filtered = allProducts.filter(p => p.nombre.toLowerCase().includes(term) || p.marca.toLowerCase().includes(term) || p.voltaje.includes(term) || p.amperaje.includes(term));
+            document.getElementById('products-title').textContent = `Resultados de "${query}"`;
+            document.getElementById('products-count').textContent = `${filtered.length} productos encontrados`;
+            ProductCard.renderGrid(filtered, 'products-grid');
+            document.querySelectorAll('.brand-btn').forEach(btn => btn.classList.remove('active'));
+        }
+        searchButton?.addEventListener('click', () => performSearch(searchInput.value));
+        searchInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(searchInput.value); });
+
+        const sidebarSearch = document.getElementById('sidebar-search');
+        const sidebarResults = document.getElementById('sidebar-results');
+        function sidebarSearchFn(query) {
+            const term = query.toLowerCase().trim();
+            if (!term) { sidebarResults.innerHTML = ''; return; }
+            const filtered = allProducts.filter(p => p.nombre.toLowerCase().includes(term) || p.marca.toLowerCase().includes(term) || p.voltaje.includes(term)).slice(0, 6);
+            if (!filtered.length) { sidebarResults.innerHTML = '<p style="text-align:center;padding:15px;color:var(--text-light);">Sin resultados</p>'; return; }
+            sidebarResults.innerHTML = filtered.map(p => `<div class="sidebar-result-item" onclick="viewProduct(${p.idBateria})"><img src="${p.imagenUrl}"><div class="sidebar-result-info"><h5>${p.nombre}</h5><p>${p.marca} | ${p.voltaje}V | S/ ${p.precio}</p></div></div>`).join('');
+        }
+        sidebarSearch?.addEventListener('input', (e) => sidebarSearchFn(e.target.value));
+        function viewProduct(id) {
+            const p = allProducts.find(x => x.idBateria === id);
+            if (p) { ProductCard.renderGrid([p], 'products-grid'); document.getElementById('products-title').textContent = p.nombre; document.getElementById('products-count').textContent = '1 producto'; sidebarSearch.value = ''; sidebarResults.innerHTML = ''; }
+        }
+
+        const vehicleData = {
+            toyota: { modelos: ['Corolla', 'Hilux', 'Yaris', 'Rav4', 'Prado', 'Land Cruiser'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016','2015'] },
+            honda: { modelos: ['Civic', 'Accord', 'CR-V', 'Pilot', 'HR-V', 'City'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016'] },
+            hyundai: { modelos: ['Tucson', 'Santa Fe', 'Creta', 'Elantra', 'Accent', 'Kona'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016'] },
+            chevrolet: { modelos: ['Spark', 'Onix', 'Equinox', 'Trailblazer', 'Captiva', 'Silverado'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016'] },
+            ford: { modelos: ['Escape', 'Explorer', 'Ranger', 'Mustang', 'EcoSport', 'Fiesta'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016'] },
+            nissan: { modelos: ['Sentra', 'X-Trail', 'Kicks', 'Altima', 'Frontier', 'Note'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016'] },
+            kia: { modelos: ['Sportage', 'Seltos', 'Sorento', 'K3', 'Picanto', 'Carnival'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016'] },
+            mazda: { modelos: ['Mazda3', 'CX-5', 'CX-30', 'Mazda2', 'CX-9', 'BT-50'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016'] },
+            volkswagen: { modelos: ['Polo', 'Vento', 'Jetta', 'Tiguan', 'Saveiro', 'Amarok'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016'] },
+            mitsubishi: { modelos: ['L200', 'Outlander', 'ASX', 'Eclipse Cross', 'Montero', 'Xpander'], anios: ['2024','2023','2022','2021','2020','2019','2018','2017','2016'] }
+        };
+
+        document.getElementById('vf-marca').addEventListener('change', function() {
+            const marca = this.value;
+            const modelo = document.getElementById('vf-modelo');
+            const anio = document.getElementById('vf-anio');
+            const tipo = document.getElementById('vf-tipo');
+            if (marca && vehicleData[marca]) {
+                modelo.innerHTML = '<option value="">Seleccionar...</option>' + vehicleData[marca].modelos.map(m => `<option value="${m}">${m}</option>`).join('');
+                modelo.disabled = false;
+                anio.disabled = true; tipo.disabled = true;
+            } else {
+                modelo.innerHTML = '<option value="">Seleccionar...</option>'; modelo.disabled = true;
+                anio.innerHTML = '<option value="">Seleccionar...</option>'; anio.disabled = true;
+                tipo.innerHTML = '<option value="">Seleccionar...</option>'; tipo.disabled = true;
+            }
+        });
+
+        document.getElementById('vf-modelo').addEventListener('change', function() {
+            const anio = document.getElementById('vf-anio');
+            if (this.value) {
+                anio.innerHTML = '<option value="">Seleccionar...</option>' + vehicleData[document.getElementById('vf-marca').value].anios.map(a => `<option value="${a}">${a}</option>`).join('');
+                anio.disabled = false;
+                document.getElementById('vf-tipo').disabled = true;
+            } else { anio.innerHTML = '<option value="">Seleccionar...</option>'; anio.disabled = true; }
+        });
+
+        document.getElementById('vf-anio').addEventListener('change', function() {
+            const tipo = document.getElementById('vf-tipo');
+            if (this.value) {
+                tipo.innerHTML = '<option value="">Seleccionar...</option><option value="sedan">Sedán</option><option value="suv">SUV</option><option value="pickup">Pickup</option><option value="hatchback">Hatchback</option><option value="minivan">Minivan</option>';
+                tipo.disabled = false;
+            } else { tipo.innerHTML = '<option value="">Seleccionar...</option>'; tipo.disabled = true; }
+        });
+
+        function buscarBateria() {
+            const marca = document.getElementById('vf-marca').value;
+            const modelo = document.getElementById('vf-modelo').value;
+            const anio = document.getElementById('vf-anio').value;
+            const tipo = document.getElementById('vf-tipo').value;
+            if (!marca || !modelo) { Toast.show('Selecciona marca y modelo', 'warning'); return; }
+            const filtered = allProducts.filter(p => p.voltaje === '12' && (parseInt(p.amperaje) >= 45 && parseInt(p.amperaje) <= 80));
+            document.getElementById('products-title').textContent = `Baterías para ${modelo} (${anio})`;
+            document.getElementById('products-count').textContent = `${filtered.length} recomendaciones`;
+            ProductCard.renderGrid(filtered, 'products-grid');
+            document.querySelectorAll('.brand-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('baterias').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        let selectedPayment = 'yape';
+        function selectPayment(el) {
+            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPayment = el.dataset.method;
+            document.getElementById('tarjeta-fields').classList.toggle('hidden', selectedPayment !== 'tarjeta');
+            document.getElementById('operacion-field').style.display = selectedPayment === 'tarjeta' ? 'none' : 'block';
+        }
+
+        let selectedDocumentType = 'comprobante';
+        function selectDocumentType(el) {
+            document.querySelectorAll('.document-type').forEach(dt => dt.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedDocumentType = el.dataset.type;
+            document.getElementById('dni-field').classList.toggle('hidden', selectedDocumentType !== 'boleta');
+            document.getElementById('ruc-field').classList.toggle('hidden', selectedDocumentType !== 'factura');
+        }
+
+        function openCheckoutModal() {
+            const cart = Storage.getCart();
+            if (!cart.length) { Toast.show('Carrito vacío', 'warning'); return; }
+            const subtotal = cart.reduce((s, i) => s + (i.precio * i.cantidad), 0);
+            const igv = subtotal * 0.18;
+            const total = subtotal + igv;
+            document.getElementById('checkout-items').innerHTML = cart.map(i => `<div class="checkout-item"><span>${i.nombre} x${i.cantidad}</span><span>S/ ${(i.precio * i.cantidad).toFixed(2)}</span></div>`).join('');
+            document.getElementById('checkout-subtotal').textContent = 'S/ ' + subtotal.toFixed(2);
+            document.getElementById('checkout-igv').textContent = 'S/ ' + igv.toFixed(2);
+            document.getElementById('checkout-total').textContent = 'S/ ' + total.toFixed(2);
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+        function closeCheckoutModal() { document.getElementById('checkout-modal').classList.add('hidden'); }
+
+        function confirmPurchase() {
+            const cliente = document.getElementById('checkout-cliente').value.trim();
+            const telefono = document.getElementById('checkout-telefono').value.trim();
+            if (!cliente) { Toast.show('Ingrese el nombre o razón social', 'warning'); return; }
+            if (!telefono || telefono.length !== 9) { Toast.show('Teléfono de 9 dígitos', 'warning'); return; }
+            
+            if (selectedDocumentType === 'boleta') {
+                const dni = document.getElementById('checkout-dni').value.trim();
+                if (!dni || dni.length !== 8) { Toast.show('Ingrese DNI de 8 dígitos', 'warning'); return; }
+            }
+            if (selectedDocumentType === 'factura') {
+                const ruc = document.getElementById('checkout-ruc').value.trim();
+                if (!ruc || ruc.length !== 11) { Toast.show('Ingrese RUC de 11 dígitos', 'warning'); return; }
+            }
+            
+            const cart = Storage.getCart();
+            const subtotal = cart.reduce((s, i) => s + (i.precio * i.cantidad), 0);
+            const igv = subtotal * 0.18;
+            const total = subtotal + igv;
+            const operacion = document.getElementById('checkout-operacion').value.trim();
+            const dni = document.getElementById('checkout-dni').value.trim();
+            const ruc = document.getElementById('checkout-ruc').value.trim();
+            const direccion = document.getElementById('checkout-direccion').value.trim();
+
+            const tipoDoc = selectedDocumentType.toUpperCase();
+            const inv = { 
+                numero: tipoDoc + '-' + Date.now().toString().slice(-8), 
+                fecha: new Date().toLocaleString('es-PE'), 
+                cliente, 
+                telefono, 
+                metodo: selectedPayment.toUpperCase(), 
+                telefonoPago: '927 456 789', 
+                operacion: operacion || '-', 
+                items: cart, 
+                subtotal, 
+                igv, 
+                total,
+                tipoDocumento: selectedDocumentType,
+                documento: selectedDocumentType === 'boleta' ? dni : (selectedDocumentType === 'factura' ? ruc : ''),
+                direccion: direccion || ''
+            };
+            
+            generatePDF(inv);
+            Storage.setCart([]);
+            Carrito.updateUI();
+            closeCheckoutModal();
+            Toast.show('¡' + (tipoDoc === 'FACTURA' ? 'Factura' : tipoDoc === 'BOLETA' ? 'Boleta' : 'Comprobante') + ' generada! PDF descargado', 'success');
+        }
+
+        function generatePDF(data) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const tipoDoc = data.tipoDocumento === 'factura' ? 'FACTURA ELECTRÓNICA' : data.tipoDocumento === 'boleta' ? 'BOLETA DE VENTA' : 'COMPROBANTE DE PAGO';
+            const tipoColor = data.tipoDocumento === 'factura' ? [0, 100, 0] : data.tipoDocumento === 'boleta' ? [180, 0, 0] : [26, 115, 232];
+            
+            doc.setFillColor(tipoColor[0], tipoColor[1], tipoColor[2]);
+            doc.rect(0, 0, 210, 35, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(22);
+            doc.text('LEANDRO BATERÍAS', 15, 22);
+            doc.setFontSize(9);
+            doc.text('Baterías Automotrices de Calidad', 15, 30);
+            
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(14);
+            doc.text(tipoDoc, 15, 50);
+            doc.setFontSize(10);
+            doc.text('N°: ' + data.numero, 15, 58);
+            doc.text('Fecha: ' + data.fecha, 15, 64);
+            
+            let y = 74;
+            doc.text('Cliente: ' + data.cliente, 15, y);
+            y += 6;
+            doc.text('Doc: ' + (data.documento ? (data.tipoDocumento === 'factura' ? 'RUC ' + data.documento : 'DNI ' + data.documento) : 'Sin documento'), 15, y);
+            y += 6;
+            doc.text('Teléfono: ' + data.telefono, 15, y);
+            if (data.direccion) { y += 6; doc.text('Dirección: ' + data.direccion, 15, y); }
+            
+            y += 12;
+            doc.setFillColor(240, 240, 240);
+            doc.rect(15, y - 5, 180, 8, 'F');
+            doc.setFont(undefined, 'bold');
+            doc.text('Producto', 17, y);
+            doc.text('Cant.', 110, y);
+            doc.text('P.Unit', 135, y);
+            doc.text('Total', 170, y);
+            doc.setFont(undefined, 'normal');
+            y += 8;
+            data.items.forEach(i => {
+                doc.text(i.nombre.substring(0, 30), 17, y);
+                doc.text(i.cantidad.toString(), 112, y);
+                doc.text('S/ ' + i.precio.toFixed(2), 137, y);
+                doc.text('S/ ' + (i.precio * i.cantidad).toFixed(2), 170, y);
+                y += 7;
+            });
+            y += 5;
+            doc.line(15, y, 195, y);
+            y += 8;
+            doc.text('Subtotal:', 130, y);
+            doc.text('S/ ' + data.subtotal.toFixed(2), 170, y);
+            y += 7;
+            doc.text('IGV (18%):', 130, y);
+            doc.text('S/ ' + data.igv.toFixed(2), 170, y);
+            y += 7;
+            doc.setFont(undefined, 'bold');
+            doc.text('TOTAL:', 130, y);
+            doc.text('S/ ' + data.total.toFixed(2), 170, y);
+            y += 15;
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(11);
+            doc.text('Método: ' + data.metodo + ' - ' + data.telefonoPago, 15, y);
+            if (data.operacion !== '-') { y += 6; doc.text('Op: ' + data.operacion, 15, y); }
+            y += 20;
+            doc.setFillColor(tipoColor[0], tipoColor[1], tipoColor[2]);
+            doc.rect(0, y, 210, 25, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.text('Gracias por su preferencia!', 80, y + 15);
+            doc.save(tipoDoc.replace(/ /g, '_') + '_' + data.numero + '.pdf');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            ProductCard.renderGrid(allProducts, 'products-grid');
+            if (typeof Carrito !== 'undefined') Carrito.init();
+            if (typeof Toast !== 'undefined') Toast.init();
+        });
+
+        const _origInit = Carrito.init;
+        Carrito.init = function() {
+            _origInit.call(this);
+            const btn = document.querySelector('.mini-cart-footer .btn');
+            if (btn) btn.onclick = openCheckoutModal;
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>

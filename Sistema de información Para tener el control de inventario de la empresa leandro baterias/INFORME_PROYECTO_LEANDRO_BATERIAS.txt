@@ -1,0 +1,539 @@
+================================================================================
+              INFORME COMPLETO DEL PROYECTO: LEANDRO BATERÍAS
+              Sistema de Información para Control de Inventario
+              Empresa de Baterías Automotrices
+              Fecha: 19 de mayo de 2026
+================================================================================
+
+INTRODUCCIÓN
+--------------------------------------------------------------------------------
+Este informe documenta el desarrollo completo del sistema "Leandro Baterías",
+una plataforma e-commerce para la gestión de inventario y ventas de baterías
+automotrices en Perú. El proyecto utiliza metodología Scrum y está diseñado
+con arquitectura Clean Architecture.
+
+================================================================================
+1. ESTRUCTURA DEL PROYECTO
+================================================================================
+
+1.1 ARQUITECTURA GENERAL
+--------------------------------------------------------------------------------
+El sistema está diseñado con una arquitectura de 3 capas:
+
+  PRESENTACIÓN (Frontend)
+  ├── HTML5 + CSS3 + JavaScript (Vanilla)
+  ├── index.html - index7.html (6 versiones evolutivas)
+  └── js/, css/, assets/
+
+  API (Backend - ASP.NET Core)
+  ├── Controllers/
+  ├── Services/
+  └── Middleware/
+
+  DATOS (SQL Server)
+  ├── Tablas relacionales
+  ├── Stored Procedures
+  └── Seed Data
+
+JUSTIFICACIÓN: Esta separación permite escalabilidad, mantenimiento sencillo
+y seguridad en la manipulación de datos.
+
+1.2 CARPETAS DEL PROYECTO
+--------------------------------------------------------------------------------
+LeandroBaterias/
+├── Frontend/
+│   ├── index.html - index7.html
+│   ├── css/
+│   │   ├── variables.css
+│   │   ├── styles.css
+│   │   ├── components.css
+│   │   └── responsive.css
+│   ├── js/
+│   │   ├── components/
+│   │   │   ├── producto-card.js
+│   │   │   ├── carrito.js
+│   │   │   └── modal.js
+│   │   └── utils/
+│   │       ├── storage.js
+│   │       ├── helpers.js
+│   │       └── format.js
+│   └── assets/
+├── Backend/
+│   ├── src/
+│   │   ├── LeandroBaterias.Presentation.WebAPI/
+│   │   ├── LeandroBaterias.Application/
+│   │   ├── LeandroBaterias.Domain/
+│   │   └── LeandroBaterias.Infrastructure/
+│   └── docs/
+│       └── ScriptsSQL/
+│           ├── CreateTables.sql
+│           └── SeedData.sql
+└── docs/
+    ├── ARQUITECTURA_SISTEMA_LEANDRO_BATERIAS.md
+    └── AGENTS.md
+
+JUSTIFICACIÓN: Estructura modular que facilita el trabajo en equipo y la
+separación de responsabilidades.
+
+================================================================================
+2. DESARROLLO DEL FRONTEND (ARCHIVOS HTML)
+================================================================================
+
+2.1 EVOLUCIÓN DE VERSIONES
+--------------------------------------------------------------------------------
+
+index.html - Versión inicial básica
+  └── Propósito: Punto de partida con estructura HTML fundamental
+  └── Contenido: Catálogo de baterías con carrito básico
+
+index3.html - Segunda versión
+  └── Mejoras: Estilos CSS mejorados, grid de productos
+  └── Novedad: Sidebar de búsqueda implementado
+
+index4.html - Tercera versión
+  └── Mejoras: Dashboard, equipo Scrum, diseño responsive
+  └── Novedad: Filtro por marcas, búsqueda avanzada
+  └── Inclusión: Equipo de trabajo visual (Baca Medina, Cahuana Mendoza, etc.)
+
+index5.html - Cuarta versión (Integración CAPSA)
+  └── Propósito: Primera marca con imágenes reales
+  └── Baterías agregadas: 17 modelos CAPSA
+  └── URL de imágenes: bateriascapsa.com
+  └── Precios: S/170 - S/850
+  └── Modelo: U1R 500, NS40L 670, NS60L 700, NS60L 770, 42I 800, etc.
+
+index5.1.html - Expansión SOLITE
+  └── Propósito: Segunda marca con imágenes reales
+  └── Baterías agregadas: 8 modelos Solite
+  └── URL de imágenes: bateriaskallpa.com, ditesac.com, daitocar.cl
+  └── Precios: S/280 - S/480
+  └── Modelo: 42B19L, 50B19L, 55B24L, 75D23L, 105D31L, CMF55066, CMF56219, CMF57412
+
+index5.2.html - Expansión VARTA
+  └── Propósito: Tercera marca con imágenes reales
+  └── Baterías agregadas: 9 modelos Varta
+  └── URL de imágenes: ditesac.com, api.implementos.com.pe
+  └── Precios: S/380 - S/950
+  └── Modelo: 27R V5 1300, 31T V4 1400, 35 V4 850, etc.
+
+index5.3.html - Expansión ULTRABAT
+  └── Propósito: Cuarta marca con imágenes reales
+  └── Baterías agregadas: 5 modelos Ultrabat
+  └── URL de imágenes: elgatobaterias.com
+  └── Precios: S/250 - S/360
+  └── Modelo: HL-55, FF-66, W-70N, V-82N, S-96I
+
+index5.4.html - Expansión ETNA
+  └── Propósito: Quinta marca con imágenes reales
+  └── Baterías agregadas: 10 modelos Etna
+  └── URL de imágenes: ditesac.com, promart.vteximg.com.br
+  └── Precios: S/280 - S/630
+  └── Modelo: HL-11, FF-11, FF-13, W-13, V-13NOR, etc.
+
+index5.5.html - Expansión ENERJET
+  └── Propósito: Sexta marca con imágenes reales
+  └── Baterías agregadas: 13 modelos Enerjet
+  └── URL de imágenes: enerjet.com.pe, media.falabella.com
+  └── Precios: S/290 - S/900
+  └── Modelo: 11D56, 11T56, 11W75, 13W75, 13S85, etc.
+
+index6.html - VERSIÓN CONSOLIDADA FINAL
+  └── Propósito: Unificar todas las baterías en un solo archivo
+  └── Total: 63 baterías de 6 marcas
+  └── Correcciones aplicadas:
+      - Solite 40B19L: precio S/180 → S/270, URL corregida
+      - Enerjet 13W75: URL corregida (sin _next/image)
+      - Capsa NS40L 670: precio S/170 → S/280
+
+index7.html - VERSIÓN FINAL COMPLETA
+  └── Propósito: Agregar métodos de pago y tipos de documento
+  └── Novedades implementadas:
+      - 3 métodos de pago: Yape, Plin, Tarjeta
+      - 3 tipos de documento: Comprobante, Boleta, Factura
+      - Campos dinámicos según selección
+      - Iconos actualizados para cada método de pago
+
+2.2 COMPONENTES JAVASTRING
+--------------------------------------------------------------------------------
+
+js/utils/storage.js
+  └── Función: Wrapper para localStorage
+  └── Métodos: getCart(), setCart(), getTheme(), setTheme()
+  └── Justificación: Persistencia de datos del carrito y tema oscuro
+
+js/utils/helpers.js
+  └── Función: Utilidades generales
+  └── Métodos: generarId(), formatearFecha(), etc.
+  └── Justificación: Código reutilizable y mantenible
+
+js/utils/format.js
+  └── Función: Formateo de datos para visualización
+  └── Métodos: formatCurrency(), formatDate(), etc.
+  └── Justificación: Consistencia en formato de precios y fechas
+
+js/components/producto-card.js
+  └── Función: Renderizar tarjetas de productos
+  └── Método: ProductCard.renderGrid(products, containerId)
+  └── Justificación: Componente reutilizable para el catálogo
+
+js/components/carrito.js
+  └── Función: Gestión del carrito de compras
+  └── Métodos: addItem(), removeItem(), updateUI(), etc.
+  └── Justificación: Lógica central del e-commerce
+
+js/components/modal.js
+  └── Función: Sistema de modales
+  └── Métodos: open(), close(), etc.
+  └── Justificación: Interfaz de usuario consistente
+
+2.3 ESTILOS CSS
+--------------------------------------------------------------------------------
+
+css/variables.css
+  └── Propósito: Variables CSS globales (colores, fuentes, espaciados)
+  └── Justificación: Cambio de tema oscuro sin duplicar código
+
+css/styles.css
+  └── Propósito: Estilos base del sitio
+  └── Justificación: Estructura visual consistente
+
+css/components.css
+  └── Propósito: Estilos de componentes reutilizables
+  └── Justificación: Cards, botones, formularios
+
+css/responsive.css
+  └── Propósito: Diseño responsive (mobile-first)
+  └── Justificación: Experiencia móvil optimizada
+
+================================================================================
+3. SISTEMA DE PAGOS (MÉTODOS DE PAGO)
+================================================================================
+
+3.1 INTEGRACIÓN DE MEDIOS DE PAGO
+--------------------------------------------------------------------------------
+
+El sistema implementa 3 métodos de pago:
+
+MÉTODO YAPE
+  └── Número: 927 456 789
+  └── Icono: https://upload.wikimedia.org/wikipedia/commons/0/08/Icono_de_la_aplicación_Yape.png
+  └── Justificación: Método de pago más popular en Perú
+
+MÉTODO PLIN
+  └── Número: 927 456 789
+  └── Icono: https://images.seeklogo.com/logo-png/38/1/plin-logo-png_seeklogo-386806.png
+  └── Justificación: Segunda opción de pago móvil más usada
+
+MÉTODO TARJETA
+  └── Icono: https://www.footloose.pe/arquivos/ids/1369498/logos-de-bancos-min.jpg
+  └── Campos: Número de tarjeta, MM/AA, CVV
+  └── Justificación: Pago con tarjetas de crédito/débito
+
+3.2 LÓGICA DE SELECCIÓN DE PAGO
+--------------------------------------------------------------------------------
+
+En index7.html, la función selectPayment() maneja:
+  - Resaltado visual del método seleccionado
+  - Mostrar/ocultar campos de tarjeta según selección
+  - Persistencia de la selección en variable global
+
+================================================================================
+4. SISTEMA DE DOCUMENTACIÓN (FACTURAS, BOLETAS, COMPROBANTES)
+================================================================================
+
+4.1 TIPOS DE DOCUMENTO
+--------------------------------------------------------------------------------
+
+COMPROBANTE DE PAGO
+  └── Código: NULL (sin documento fiscal)
+  └── Campos requeridos: Ninguno (opcional dar DNI)
+  └── Color en PDF: Azul (#1A73E8)
+  └── Justificación: Para ventas sin necesidad de comprobante fiscal
+
+BOLETA DE VENTA
+  └── Código: 03
+  └── Campos requeridos: DNI (8 dígitos)
+  └── Color en PDF: Rojo (#B40000)
+  └── Justificación: Comprobante para persona natural sin RUC
+
+FACTURA ELECTRÓNICA
+  └── Código: 01
+  └── Campos requeridos: RUC (11 dígitos)
+  └── Campos opcionales: Dirección fiscal
+  └── Color en PDF: Verde (#006400)
+  └── Justificación: Comprobante para empresas con RUC
+
+4.2 GENERACIÓN DE PDF
+--------------------------------------------------------------------------------
+
+La función generatePDF() en index7.html:
+  - Genera PDF dinámico según tipo de documento
+  - Incluye: Fecha, hora, datos del cliente, items, totales
+  - Diseño visual diferenciado por tipo
+  - Nombre del archivo: COMPROBANTE_XXX.pdf, BOLETA_XXX.pdf, FACTURA_XXX.pdf
+
+4.3 VALIDACIONES IMPLEMENTADAS
+--------------------------------------------------------------------------------
+
+  - Nombre/Razón Social: Requerido
+  - Teléfono: 9 dígitos obligatorios
+  - DNI (Boleta): Exactamente 8 dígitos
+  - RUC (Factura): Exactamente 11 dígitos
+  - Dirección: Solo para facturas (opcional)
+  - N° Operación: Opcional para todos
+
+================================================================================
+5. BASE DE DATOS (SQL SERVER)
+================================================================================
+
+5.1 TABLAS IMPLEMENTADAS
+--------------------------------------------------------------------------------
+
+Marcas
+  └── Campos: IdMarca, Nombre, Descripcion, LogoUrl, Activo
+  └── Justificación: Categorización de baterías por marca
+
+Baterias
+  └── Campos: Id, IdMarca, IdCategoria, Codigo, Nombre, Voltaje, Amperaje,
+             PotenciaArranque, Precio, PrecioCosto, StockActual, StockMinimo,
+             ImagenUrl, GarantiaMeses, Destacado, Activo
+  └── Justificación: Catálogo completo de productos
+
+Categorias
+  └── Campos: IdCategoria, Nombre, Descripcion, Activo
+  └── Justificación: Clasificación técnica (Convencional, AGM, Gel, Premium)
+
+Pedidos
+  └── Campos: IdPedido, IdCliente, NumeroPedido, Estado, Total, TipoPago, etc.
+  └── Justificación: Seguimiento de ventas
+
+Pagos
+  └── Campos: IdPago, IdPedido, TipoPago, Estado, NumeroOperacion
+  └── Justificación: Registro de transacciones
+
+Facturas
+  └── Campos: IdFactura, NumeroFactura, Serie, TipoDocumento, etc.
+  └── Justificación: Documentación fiscal
+
+Transportistas
+  └── Campos: IdTransportista, Nombre, RUC, Telefono
+  └── Justificación: Logística de entregas
+
+5.2 SEED DATA (DATOS INICIALES)
+--------------------------------------------------------------------------------
+
+63 BATERÍAS REGISTRADAS:
+
+SOLITE (9 modelos)
+  ├── 40B19L: S/270 - https://www.boliche.cl/...
+  ├── 42B19L: S/280
+  ├── 50B19L: S/300
+  ├── 55B24L: S/320
+  ├── 75D23L: S/430
+  ├── 105D31L: S/480
+  ├── CMF55066: S/380
+  ├── CMF56219: S/400
+  └── CMF57412: S/480
+
+ENERJET (13 modelos)
+  ├── 11D56: S/290
+  ├── 11T56: S/320
+  ├── 11W75: S/320
+  ├── 13W75: S/340
+  ├── 13S85: S/380
+  ├── 15M99: S/430
+  ├── 15MB90: S/410
+  ├── 17T114: S/510
+  ├── 19P130: S/610
+  ├── 23P159: S/670
+  ├── 25P170: S/730
+  ├── 27P190: S/770
+  └── 33P224: S/900
+
+ETNA (10 modelos)
+  ├── HL-11: S/280
+  ├── FF-11: S/300
+  ├── FF-13: S/320
+  ├── W-13: S/330
+  ├── V-13NOR: S/370
+  ├── FH-1215NOR: S/400
+  ├── S-1215EM: S/380
+  ├── SU-1217: S/480
+  ├── S-1219: S/580
+  └── S-1223 N/I: S/630
+
+ULTRABAT (5 modelos)
+  ├── HL-55: S/250
+  ├── FF-66: S/280
+  ├── W-70N: S/290
+  ├── V-82N: S/330
+  └── S-96I: S/360
+
+VARTA (9 modelos)
+  ├── 27R V5 1300: S/520
+  ├── 31T V4 1400: S/550
+  ├── 35 V4 850: S/400
+  ├── 42IST V4 870: S/380
+  ├── 42IST V5 950: S/420
+  ├── 48IST V5 1150: S/460
+  ├── 49ST V4 1250: S/550
+  ├── 4DLTI V4 1500: S/730
+  └── 8DI V4 2650: S/950
+
+CAPSA (17 modelos)
+  ├── U1R 500: S/200
+  ├── NS40L 670: S/280
+  ├── NS60L 700: S/300
+  ├── NS60L 770: S/320
+  ├── 42I 800: S/315
+  ├── 42I 900: S/320
+  ├── 24R 950: S/350
+  ├── 27R 1150: S/430
+  ├── 27 1150: S/430
+  ├── 30H 1600: S/490
+  ├── 31T 1600: S/500
+  ├── 35 1100: S/370
+  ├── 36IMX 770: S/290
+  ├── 65 1100: S/520
+  ├── 4D 1800: S/680
+  ├── 4D 2000: S/700
+  └── 8DI 2600: S/850
+
+5.3 CONFIGURACIONES
+--------------------------------------------------------------------------------
+
+IGV_PORCENTAJE: 18.00
+MONEDA_DEFAULT: PEN
+SERIE_FACTURA: F001
+SERIE_BOLETA: B001
+PAGO_YAPE_NUMERO: 927456789
+PAGO_PLIN_NUMERO: 927456789
+PAGO_TARJETA_HABILITADO: true
+MONTO_ENVIO_GRATIS: 200
+
+================================================================================
+6. METODOLOGÍA SCRUM
+================================================================================
+
+EQUIPO DE DESARROLLO
+--------------------------------------------------------------------------------
+  Product Owner: Baca Medina
+  Scrum Master: Cahuana Mendoza
+  DevTeam: Bonifacio Ruiz, Llanos Luna
+  Sponsor: Medina Carpio Alexsander
+
+JUSTIFICACIÓN: El equipo Scrum garantiza desarrollo iterativo, reuniones
+diarias, revisión de sprints y mejora continua del producto.
+
+================================================================================
+7. FUNCIONALIDADES IMPLEMENTADAS
+================================================================================
+
+7.1 CATÁLOGO DE PRODUCTOS
+  ├── Filtrado por marca (6 marcas)
+  ├── Búsqueda por nombre, modelo, voltaje
+  ├── Visualización de stock
+  ├── Indicador de producto destacado
+  └── Información de garantía
+
+7.2 CARRITO DE COMPRAS
+  ├── Agregar/quitar productos
+  ├── Modificar cantidad
+  ├── Cálculo automático de totales
+  ├── Persistencia en localStorage
+  └── Mini carrito en header
+
+7.3 SISTEMA DE CHECKOUT
+  ├── Selección de método de pago (3 opciones)
+  ├── Selección de tipo de documento (3 opciones)
+  ├── Validación de campos obligatorios
+  ├── Cálculo de IGV (18%)
+  └── Generación de PDF con comprobante
+
+7.4 PANEL DE CONTROL (DASHBOARD)
+  ├── Total de baterías
+  ├── Stock bajo
+  ├── Ventas del mes
+  └── Pedidos activos
+
+7.5 DISEÑO RESPONSIVE
+  ├── Mobile (576px)
+  ├── Tablet (992px)
+  └── Desktop
+
+7.6 TEMA OSCURO
+  └── Persistencia en localStorage
+
+================================================================================
+8. CORRECCIONES Y ACTUALIZACIONES
+================================================================================
+
+Durante el desarrollo se realizaron las siguientes correcciones:
+
+1. SOLITE 40B19L
+   - Precio original: S/180
+   - Precio corregido: S/270
+   - Justificación: Precio actualizado según datos proporcionados
+
+2. CAPSA NS40L 670
+   - Precio original: S/170
+   - Precio corregido: S/280
+   - Justificación: Precio actualizado según datos proporcionados
+
+3. ENERJET 13W75
+   - URL original: https://www.enerjet.com.pe/_next/image?...
+   - URL corregida: https://media.falabella.com/...
+   - Justificación: URL directa de imagen funcional
+
+================================================================================
+9. TECNOLOGÍAS UTILIZADAS
+================================================================================
+
+FRONTEND
+  ├── HTML5
+  ├── CSS3 (variables, flexbox, grid)
+  ├── JavaScript ES6+
+  ├── Font Awesome 6.4.0
+  ├── Google Fonts (Inter)
+  └── jsPDF 2.5.1 (generación de PDF)
+
+BACKEND
+  ├── ASP.NET Core Web API
+  ├── Entity Framework Core
+  ├── Dapper
+  └── SQL Server
+
+HERRAMIENTAS
+  ├── Visual Studio Code
+  ├── Git
+  ├── SQL Server Management Studio
+  └── Swagger (documentación API)
+
+================================================================================
+10. CONCLUSIONES
+================================================================================
+
+El proyecto "Leandro Baterías" ha sido desarrollado exitosamente con las
+siguientes logros:
+
+✓ Catálogo completo de 63 baterías de 6 marcas
+✓ Sistema de compras funcional con carrito
+✓ 3 métodos de pago integrados (Yape, Plin, Tarjeta)
+✓ 3 tipos de documentos (Comprobante, Boleta, Factura)
+✓ Base de datos con 63 productos registrados
+✓ PDF dinámico para cada tipo de documento
+✓ Diseño responsive y tema oscuro
+✓ Equipo Scrum documentado
+
+El sistema está listo para su implementación en producción, ofreciendo
+una experiencia completa de e-commerce para la venta de baterías
+automotrices en Perú.
+
+================================================================================
+                        FIN DEL INFORME
+================================================================================
+Proyecto: Leandro Baterías
+Versión: Final (index7.html)
+Fecha: 19 de mayo de 2026
+Desarrollado con metodología Scrum
+================================================================================

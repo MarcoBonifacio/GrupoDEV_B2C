@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Leandro Baterías - Baterías automotrices de alta calidad. Las mejores marcas: Bosch, Varta, Yuasa, Exide. Venta online y servicio técnico.">
+    <meta name="keywords" content="baterías, baterías automotrices, batería para auto, Bosch, Varta, Yuasa, Exide, Leandro Baterías, baterías en Perú">
+    <meta name="author" content="Leandro Baterías">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Leandro Baterías - Baterías Automotrices de Calidad">
+    <meta property="og:description" content="Encuentra la batería perfecta para tu vehículo. Las mejores marcas en un solo lugar.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_PE">
+
+    <title>Leandro Baterías | Baterías Automotrices de Calidad</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-top-content">
+                        <div class="header-top-left">
+                            <span class="contact-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <span>(01) 234-5678</span>
+                            </span>
+                            <span class="contact-item">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>987 654 321</span>
+                            </span>
+                            <span class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>ventas@leandrobaterias.com</span>
+                            </span>
+                        </div>
+                        <div class="header-top-right">
+                            <a href="#" class="header-top-link"><i class="fas fa-truck"></i> Rastrear pedido</a>
+                            <a href="#" class="header-top-link"><i class="fas fa-map-marker-alt"></i>Nuestra tienda</a>
+                            <select class="language-select" aria-label="Idioma">
+                                <option value="es">ES</option>
+                                <option value="en">EN</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-main">
+                <div class="container">
+                    <div class="header-main-content">
+                        <a href="index.html" class="logo">
+                            <div class="logo-icon">
+                                <i class="fas fa-car-battery"></i>
+                            </div>
+                            <div class="logo-text">
+                                <span class="logo-name">Leandro</span>
+                                <span class="logo-slogan">Baterías</span>
+                            </div>
+                        </a>
+
+                        <div class="search-container">
+                            <div class="search-box">
+                                <div class="search-category">
+                                    <select id="search-category-select" aria-label="Buscar en">
+                                        <option value="bateria">Baterías</option>
+                                        <option value="vehiculo">Mi vehículo</option>
+                                    </select>
+                                </div>
+                                <input type="text" id="search-input" class="search-input" placeholder="Buscar batería por código, marca o modelo...">
+                                <button id="search-button" class="search-button" aria-label="Buscar">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div id="search-suggestions" class="search-suggestions hidden"></div>
+                        </div>
+
+                        <div class="header-actions">
+                            <button id="btn-compare" class="header-action-btn" aria-label="Comparar">
+                                <i class="fas fa-balance-scale"></i>
+                                <span class="action-badge">0</span>
+                            </button>
+                            <button id="btn-favorites" class="header-action-btn" aria-label="Favoritos">
+                                <i class="far fa-heart"></i>
+                                <span class="action-badge">0</span>
+                            </button>
+                            <button id="btn-cart" class="header-action-btn cart-btn" aria-label="Carrito">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="action-badge cart-count">0</span>
+                                <span class="cart-total">S/ 0.00</span>
+                            </button>
+                            <div id="mini-cart" class="mini-cart hidden">
+                                <div class="mini-cart-header">
+                                    <h4>Mi Carrito</h4>
+                                    <button id="close-mini-cart" class="close-btn"><i class="fas fa-times"></i></button>
+                                </div>
+                                <div id="mini-cart-items" class="mini-cart-items"></div>
+                                <div class="mini-cart-footer">
+                                    <div class="mini-cart-total">
+                                        <span>Total:</span>
+                                        <span id="mini-cart-total">S/ 0.00</span>
+                                    </div>
+                                    <a href="pages/checkout.html" class="btn btn-primary btn-block">Finalizar Compra</a>
+                                    <a href="pages/carrito.html" class="btn btn-outline btn-block">Ver Carrito</a>
+                                </div>
+                            </div>
+                            <div id="user-menu" class="user-menu">
+                                <button class="user-btn">
+                                    <i class="far fa-user"></i>
+                                    <span>Mi Cuenta</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="user-dropdown hidden">
+                                    <a href="pages/login.html"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                                    <a href="pages/registro.html"><i class="fas fa-user-plus"></i> Registrarse</a>
+                                    <hr>
+                                    <a href="pages/mi-cuenta.html"><i class="fas fa-user-circle"></i> Mi Perfil</a>
+                                    <a href="pages/mis-pedidos.html"><i class="fas fa-box"></i> Mis Pedidos</a>
+                                    <a href="pages/admin/dashboard.html"><i class="fas fa-cog"></i> Panel Admin</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="header-nav">
+                <div class="container">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-page="home">
+                                <i class="fas fa-home"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item has-dropdown">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-car-battery"></i> Baterías
+                                <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <div class="nav-dropdown">
+                                <div class="dropdown-section">
+                                    <h4>Por Tipo</h4>
+                                    <ul>
+                                        <li><a href="pages/catalogo.html?tipo=convencional">Convencional</a></li>
+                                        <li><a href="pages/catalogo.html?tipo=ag AGM">AGM</a></li>
+                                        <li><a href="pages/catalogo.html?tipo=efb">EFB</a></li>
+                                        <li><a href="pages/catalogo.html?tipo=gel">Gel</a></li>
+                                    </ul>
+                                </div>
+                                <div class="dropdown-section">
+                                    <h4>Por Marca</h4>
+                                    <ul id="marcas-dropdown"></ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-page="catalogo">
+                                <i class="fas fa-list"></i> Catálogo
+                            </a>
+                        </li>
+                        <li class="nav-item has-dropdown">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-car"></i> Mi Vehículo
+                                <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <div class="nav-dropdown vehicle-dropdown">
+                                <form id="vehicle-search-form" class="vehicle-search-form">
+                                    <div class="vehicle-fields">
+                                        <div class="form-group">
+                                            <label for="vehicle-marca">Marca</label>
+                                            <select id="vehicle-marca" required>
+                                                <option value="">Seleccionar...</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="vehicle-modelo">Modelo</label>
+                                            <select id="vehicle-modelo" required disabled>
+                                                <option value="">Seleccionar...</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="vehicle-anio">Año</label>
+                                            <select id="vehicle-anio" required disabled>
+                                                <option value="">Seleccionar...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-sm">Buscar Baterías</button>
+                                </form>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/ofertas.html" class="nav-link">
+                                <i class="fas fa-tags"></i> Ofertas
+                                <span class="nav-badge">HOT</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/servicios.html" class="nav-link">
+                                <i class="fas fa-tools"></i> Servicios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/contacto.html" class="nav-link">
+                                <i class="fas fa-headset"></i> Contacto
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-slider">
+                <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80')">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <span class="hero-tag">Nuevos Modelos 2026</span>
+                        <h1>Baterías de Alta Performance</h1>
+                        <p>Encuentra la batería perfecta para tu vehículo con tecnología de última generación</p>
+                        <div class="hero-cta">
+                            <a href="pages/catalogo.html" class="btn btn-primary btn-lg">
+                                <i class="fas fa-shopping-bag"></i> Ver Catálogo
+                            </a>
+                            <a href="#vehicle-finder" class="btn btn-outline btn-lg">
+                                <i class="fas fa-car"></i> Buscar por Mi Auto
+                            </a>
+                        </div>
+                        <div class="hero-features">
+                            <div class="hero-feature">
+                                <i class="fas fa-shipping-fast"></i>
+                                <span>Envío gratis</span>
+                            </div>
+                            <div class="hero-feature">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Garantía 24 meses</span>
+                            </div>
+                            <div class="hero-feature">
+                                <i class="fas fa-tools"></i>
+                                <span>Instalación gratis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1920&q=80')">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <span class="hero-tag">Ofertas Especiales</span>
+                        <h1>Hasta 30% de Descuento</h1>
+                        <p>En baterías Bosch y Varta seleccionadas. ¡ aprovecha!</p>
+                        <div class="hero-cta">
+                            <a href="pages/ofertas.html" class="btn btn-primary btn-lg">
+                                <i class="fas fa-fire"></i> Ver Ofertas
+                            </a>
+                        </div>
+                        <div class="hero-features">
+                            <div class="hero-feature">
+                                <i class="fas fa-tag"></i>
+                                <span>Los mejores precios</span>
+                            </div>
+                            <div class="hero-feature">
+                                <i class="fas fa-percent"></i>
+                                <span>Descuentos exclusivos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="hero-nav prev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+            <button class="hero-nav next" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+            <div class="hero-dots"></div>
+        </section>
+
+        <!-- Vehicle Finder -->
+        <section id="vehicle-finder" class="vehicle-finder">
+            <div class="container">
+                <div class="vehicle-finder-box">
+                    <div class="vehicle-finder-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="vehicle-finder-content">
+                        <h3>Encuentra la Batería Correcta</h3>
+                        <p>Selecciona tu vehículo y te mostraremos las baterías compatibles</p>
+                    </div>
+                    <form id="hero-vehicle-form" class="vehicle-finder-form">
+                        <div class="vf-fields">
+                            <div class="vf-field">
+                                <select id="hf-marca" required>
+                                    <option value="">Marca</option>
+                                </select>
+                            </div>
+                            <div class="vf-field">
+                                <select id="hf-modelo" required disabled>
+                                    <option value="">Modelo</option>
+                                </select>
+                            </div>
+                            <div class="vf-field">
+                                <select id="hf-anio" required disabled>
+                                    <option value="">Año</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Buscar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="categories">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Categorías</h2>
+                    <p>Encuentra el tipo de batería que necesitas</p>
+                </div>
+                <div class="categories-grid">
+                    <a href="pages/catalogo.html?tipo=convencional" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-car-battery"></i>
+                        </div>
+                        <h4>Convencional</h4>
+                        <p>Para vehículos estándar</p>
+                        <span class="category-count">24 productos</span>
+                    </a>
+                    <a href="pages/catalogo.html?tipo=agm" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4>AGM</h4>
+                        <p>Alta tecnologíaVRLA</p>
+                        <span class="category-count">18 productos</span>
+                    </a>
+                    <a href="pages/catalogo.html?tipo=efb" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-charging-station"></i>
+                        </div>
+                        <h4>EFB</h4>
+                        <p>Start-Stop mejorado</p>
+                        <span class="category-count">12 productos</span>
+                    </a>
+                    <a href="pages/catalogo.html?tipo=gel" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h4>Gel</h4>
+                        <p>Electrolito gelificado</p>
+                        <span class="category-count">8 productos</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="featured-products">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>Baterías Destacadas</h2>
+                        <p>Las mejores opciones para tu vehículo</p>
+                    </div>
+                    <div class="section-nav">
+                        <a href="pages/catalogo.html" class="btn btn-outline">
+                            Ver Todo <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div id="products-grid" class="products-grid">
+                    <!-- Products will be loaded via JS -->
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Cargando productos...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brands -->
+        <section class="brands">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Marcas Disponibles</h2>
+                    <p>Las mejores marcas internacionales</p>
+                </div>
+                <div class="brands-grid">
+                    <div class="brand-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Crect fill='%231a1a1a' width='120' height='40' rx='4'/%3E%3Ctext x='60' y='26' text-anchor='middle' fill='white' font-size='12' font-weight='bold'%3ESOLITE%3C/text%3E%3C/svg%3E" alt="Solite">
+                    </div>
+                    <div class="brand-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Crect fill='%23e63946' width='120' height='40' rx='4'/%3E%3Ctext x='60' y='26' text-anchor='middle' fill='white' font-size='12' font-weight='bold'%3EVARTA%3C/text%3E%3C/svg%3E" alt="Varta">
+                    </div>
+                    <div class="brand-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Crect fill='%23ff6d00' width='120' height='40' rx='4'/%3E%3Ctext x='60' y='26' text-anchor='middle' fill='white' font-size='12' font-weight='bold'%3EENERJET%3C/text%3E%3C/svg%3E" alt="Enerjet">
+                    </div>
+                    <div class="brand-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Crect fill='%2300c853' width='120' height='40' rx='4'/%3E%3Ctext x='60' y='26' text-anchor='middle' fill='white' font-size='12' font-weight='bold'%3EETNA%3C/text%3E%3C/svg%3E" alt="Etna">
+                    </div>
+                    <div class="brand-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Crect fill='%239c27b0' width='120' height='40' rx='4'/%3E%3Ctext x='60' y='26' text-anchor='middle' fill='white' font-size='12' font-weight='bold'%3EULTRABAT%3C/text%3E%3C/svg%3E" alt="Ultrabat">
+                    </div>
+                    <div class="brand-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Crect fill='%234caf50' width='120' height='40' rx='4'/%3E%3Ctext x='60' y='26' text-anchor='middle' fill='white' font-size='12' font-weight='bold'%3ECAPSA%3C/text%3E%3C/svg%3E" alt="Capsa">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2> Servicios Incluidos</h2>
+                    <p>Todo lo que necesitas en un solo lugar</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-truck-loading"></i>
+                        </div>
+                        <h4>Envío Gratis</h4>
+                        <p>Delivery gratuito en Lima y provincias para pedidos mayores a S/ 200</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h4>Instalación Gratis</h4>
+                        <p>Nuestro técnico especializado instala tu batería sin costo adicional</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Garantía 24 Meses</h4>
+                        <p>Todas nuestras baterías incluyen garantía oficial del fabricante</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-undo"></i>
+                        </div>
+                        <h4>Devolución 30 días</h4>
+                        <p>Si no estás satisfecho, te devolvemos tu dinero</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>Soporte 24/7</h4>
+                        <p>Nuestro equipo te asesora en cualquier momento</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h4>Calidad Certificada</h4>
+                        <p>Productos originales con certificación de calidad</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="faq">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Preguntas Frecuentes</h2>
+                    <p>Resolvemos tus dudas</p>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cómo saber qué batería necesita mi auto?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Puedes usar nuestro buscador por vehículo ingresando la marca, modelo y año de tu auto. También puedes revisar el manual de tu vehículo o contactarnos para que un asesor te guíe.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cuánto dura una batería de auto?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>La vida útil promedio de una batería es de 3 a 5 años, dependiendo del uso, clima y mantenimiento. Es importante realizar revisiones periódicas.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Ofrecen instalación a domicilio?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí, ofrecemos servicio de instalación a domicilio en Lima y Callao. Puedes programar la instalación al momento de realizar tu compra.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Qué métodos de pago aceptan?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Aceptamos tarjetas de crédito y débito (Visa, Mastercard, American Express), transferencias bancarias, Yape, Plin y pagos en efectivo contra entrega.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <div class="container">
+                <div class="newsletter-content">
+                    <div class="newsletter-text">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <div>
+                            <h3>¡Suscríbete a nuestro boletín!</h3>
+                            <p>Recibe ofertas exclusivas y aprende sobre el cuidado de tu batería</p>
+                        </div>
+                    </div>
+                    <form id="newsletter-form" class="newsletter-form">
+                        <input type="email" placeholder="Tu correo electrónico" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Suscribirse
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-main">
+                <div class="container">
+                    <div class="footer-grid">
+                        <div class="footer-col footer-about">
+                            <div class="footer-logo">
+                                <div class="logo-icon">
+                                    <i class="fas fa-car-battery"></i>
+                                </div>
+                                <div class="logo-text">
+                                    <span class="logo-name">Leandro</span>
+                                    <span class="logo-slogan">Baterías</span>
+                                </div>
+                            </div>
+                            <p>Líderes en venta de baterías automotrices en Perú. Más de 20 años de experiencia brindando soluciones энергетические de calidad.</p>
+                            <div class="footer-social">
+                                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="footer-col">
+                            <h4>Información</h4>
+                            <ul class="footer-links">
+                                <li><a href="pages/nosotros.html">Nosotros</a></li>
+                                <li><a href="pages/servicios.html">Servicios</a></li>
+                                <li><a href="pages/garantias.html">Garantías</a></li>
+                                <li><a href="pages/envios.html">Envíos y Delivery</a></li>
+                                <li><a href="pages/terminos.html">Términos y Condiciones</a></li>
+                                <li><a href="pages/privacidad.html">Política de Privacidad</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-col">
+                            <h4>Mi Cuenta</h4>
+                            <ul class="footer-links">
+                                <li><a href="pages/mi-cuenta.html">Mi Perfil</a></li>
+                                <li><a href="pages/mis-pedidos.html">Mis Pedidos</a></li>
+                                <li><a href="pages/favoritos.html">Mis Favoritos</a></li>
+                                <li><a href="pages/carrito.html">Carrito de Compras</a></li>
+                                <li><a href="pages/login.html">Iniciar Sesión</a></li>
+                                <li><a href="pages/registro.html">Registrarse</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-col">
+                            <h4>Contacto</h4>
+                            <ul class="footer-contact">
+                                <li>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Av. Principal 1234, Lima, Perú</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-phone-alt"></i>
+                                    <span>(01) 234-5678</span>
+                                </li>
+                                <li>
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>987 654 321</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope"></i>
+                                    <span>ventas@leandrobaterias.com</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-clock"></i>
+                                    <span>Lun - Sáb: 8:00 - 20:00</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-col">
+                            <h4>Métodos de Pago</h4>
+                            <div class="footer-payments">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 35'%3E%3Crect fill='%231a73e8' width='60' height='35' rx='4'/%3E%3Ctext x='30' y='22' text-anchor='middle' fill='white' font-size='10'%3EVISA%3C/text%3E%3C/svg%3E" alt="Visa">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 35'%3E%3Crect fill='%23eb001b' width='30' height='35' rx='4'/%3E%3Crect fill='%23f79e1b' x='30' width='30' height='35' rx='4'/%3E%3C/svg%3E" alt="Mastercard">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 35'%3E%3Crect fill='%230066b5' width='60' height='35' rx='4'/%3E%3Ctext x='30' y='22' text-anchor='middle' fill='white' font-size='8'%3EAMEX%3C/text%3E%3C/svg%3E" alt="American Express">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 35'%3E%3Crect fill='%2300c853' width='60' height='35' rx='4'/%3E%3Ctext x='30' y='22' text-anchor='middle' fill='white' font-size='10'%3EYAPE%3C/text%3E%3C/svg%3E" alt="Yape">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 35'%3E%3Crect fill='%23ff6d00' width='60' height='35' rx='4'/%3E%3Ctext x='30' y='22' text-anchor='middle' fill='white' font-size='10'%3EPLIN%3C/text%3E%3C/svg%3E" alt="Plin">
+                            </div>
+                            <h4 class="mt-4">Seguridad</h4>
+                            <div class="footer-security">
+                                <i class="fas fa-lock"></i>
+                                <span>SSL Secure</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="footer-bottom-content">
+                        <p>&copy; 2026 Leandro Baterías. Todos los derechos reservados.</p>
+                        <div class="footer-bottom-links">
+                            <a href="pages/terminos.html">Términos</a>
+                            <a href="pages/privacidad.html">Privacidad</a>
+                            <a href="pages/cookies.html">Cookies</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="js/utils/storage.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/utils/validation.js"></script>
+    <script src="js/utils/format.js"></script>
+    <script src="js/api/apiClient.js"></script>
+    <script src="js/api/catalogo.js"></script>
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/producto-card.js"></script>
+    <script src="js/components/carrito.js"></script>
+    <script src="js/components/modal.js"></script>
+    <script src="js/pages/home.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Leandro Baterías</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .checkout-page { margin-top: 140px; padding: 40px 0; }
+        .checkout-layout { display: grid; grid-template-columns: 1fr 400px; gap: 40px; }
+        .checkout-form { background: var(--bg-white); border-radius: var(--radius-lg); padding: 30px; margin-bottom: 24px; }
+        .checkout-form h3 { font-size: var(--font-size-xl); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .checkout-form h3 i { color: var(--primary-color); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .checkout-sidebar { position: sticky; top: 160px; }
+        .order-summary { background: var(--bg-white); border-radius: var(--radius-lg); padding: 24px; }
+        .order-item { display: flex; gap: 15px; padding: 12px 0; border-bottom: 1px solid var(--border-light); }
+        .order-item:last-child { border-bottom: none; }
+        .order-item-img { width: 60px; height: 60px; border-radius: var(--radius-sm); overflow: hidden; }
+        .order-item-img img { width: 100%; height: 100%; object-fit: cover; }
+        .order-item-info { flex: 1; }
+        .order-item-name { font-size: var(--font-size-sm); font-weight: 600; margin-bottom: 4px; }
+        .order-item-qty { font-size: var(--font-size-xs); color: var(--text-light); }
+        .order-item-price { font-size: var(--font-size-sm); font-weight: 600; }
+        .payment-methods { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .payment-option { display: flex; align-items: center; gap: 12px; padding: 16px; border: 2px solid var(--border-color); border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition-fast); }
+        .payment-option:hover, .payment-option.selected { border-color: var(--primary-color); background: var(--bg-gray); }
+        .payment-option input { display: none; }
+        .payment-option i { font-size: 24px; color: var(--primary-color); width: 30px; }
+        .payment-option .method-info { flex: 1; }
+        .payment-option .method-name { font-weight: 600; }
+        .payment-option .method-desc { font-size: var(--font-size-xs); color: var(--text-light); }
+        .payment-logos { display: flex; gap: 8px; margin-left: auto; }
+        .payment-logos img { height: 24px; opacity: 0.7; }
+        .secure-badge { display: flex; align-items: center; gap: 8px; justify-content: center; margin-top: 15px; font-size: var(--font-size-xs); color: var(--text-light); }
+        .secure-badge i { color: var(--success-color); }
+        .steps-indicator { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; }
+        .step { display: flex; align-items: center; gap: 8px; color: var(--text-light); }
+        .step.active { color: var(--primary-color); font-weight: 600; }
+        .step.completed { color: var(--success-color); }
+        .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--border-light); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: 600; }
+        .step.active .step-num { background: var(--primary-color); color: white; }
+        .step.completed .step-num { background: var(--success-color); color: white; }
+        .order-success { text-align: center; padding: 60px 20px; }
+        .order-success i { font-size: 80px; color: var(--success-color); margin-bottom: 20px; }
+        .order-success h2 { margin-bottom: 15px; }
+        .order-success p { color: var(--text-medium); margin-bottom: 30px; }
+        .order-number { background: var(--bg-gray); padding: 20px; border-radius: var(--radius-md); margin-bottom: 30px; }
+        .order-number strong { font-size: var(--font-size-xl); }
+        @media (max-width: 992px) { .checkout-layout { grid-template-columns: 1fr; } .checkout-sidebar { position: static; } .form-row, .form-row-3 { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="header-main">
+                <div class="container">
+                    <div class="header-main-content">
+                        <a href="../index.html" class="logo">
+                            <div class="logo-icon"><i class="fas fa-car-battery"></i></div>
+                            <div class="logo-text"><span class="logo-name">Leandro</span><span class="logo-slogan">Baterías</span></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="checkout-page">
+            <div class="container">
+                <div class="steps-indicator">
+                    <div class="step completed"><span class="step-num">1</span> Carrito</div>
+                    <div class="step active"><span class="step-num">2</span> Datos y Pago</div>
+                    <div class="step"><span class="step-num">3</span> Confirmación</div>
+                </div>
+
+                <div id="checkout-content">
+                    <div class="checkout-layout">
+                        <div class="checkout-main">
+                            <form id="checkout-form">
+                                <!-- Datos del Cliente -->
+                                <div class="checkout-form">
+                                    <h3><i class="fas fa-user"></i> Datos del Cliente</h3>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Tipo de Documento *</label>
+                                            <select name="tipoDoc" class="form-select" required>
+                                                <option value="">Seleccionar...</option>
+                                                <option value="D">DNI</option>
+                                                <option value="R">RUC</option>
+                                                <option value="P">Pasaporte</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Número de Documento *</label>
+                                            <input type="text" name="numeroDoc" class="form-input" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Nombres *</label>
+                                            <input type="text" name="nombres" class="form-input" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Apellidos *</label>
+                                            <input type="text" name="apellidos" class="form-input" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Email *</label>
+                                            <input type="email" name="email" class="form-input" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Teléfono *</label>
+                                            <input type="tel" name="telefono" class="form-input" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dirección de Envío -->
+                                <div class="checkout-form">
+                                    <h3><i class="fas fa-truck"></i> Dirección de Envío</h3>
+                                    <div class="form-group">
+                                        <label class="form-label">Dirección *</label>
+                                        <input type="text" name="direccion" class="form-input" required>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Ciudad *</label>
+                                            <input type="text" name="ciudad" class="form-input" value="Lima" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Departamento *</label>
+                                            <select name="departamento" class="form-select" required>
+                                                <option value="">Seleccionar...</option>
+                                                <option value="Lima" selected>Lima</option>
+                                                <option value="Callao">Callao</option>
+                                                <option value="Arequipa">Arequipa</option>
+                                                <option value="Trujillo">Trujillo</option>
+                                                <option value="Otro">Otro</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Referencia (opcional)</label>
+                                        <input type="text" name="referencia" class="form-input" placeholder="Cerca de algún punto de referencia">
+                                    </div>
+                                </div>
+
+                                <!-- Método de Pago -->
+                                <div class="checkout-form">
+                                    <h3><i class="fas fa-credit-card"></i> Método de Pago</h3>
+                                    <div class="payment-methods">
+                                        <label class="payment-option selected">
+                                            <input type="radio" name="pago" value="tarjeta" checked>
+                                            <i class="fas fa-credit-card"></i>
+                                            <div class="method-info">
+                                                <div class="method-name">Tarjeta de Crédito/Débito</div>
+                                                <div class="method-desc">Visa, Mastercard, American Express</div>
+                                            </div>
+                                            <div class="payment-logos">
+                                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 25'%3E%3Crect fill='%231a73e8' width='40' height='25' rx='3'/%3E%3Ctext x='20' y='17' text-anchor='middle' fill='white' font-size='8'%3EVISA%3C/text%3E%3C/svg%3E" alt="Visa">
+                                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 25'%3E%3Crect fill='%23eb001b' width='20' height='25' rx='3'/%3E%3Crect fill='%23f79e1b' x='20' width='20' height='25' rx='3'/%3E%3C/svg%3E" alt="MC">
+                                            </div>
+                                        </label>
+                                        <label class="payment-option">
+                                            <input type="radio" name="pago" value="yape">
+                                            <i class="fab fa-whatsapp"></i>
+                                            <div class="method-info">
+                                                <div class="method-name">Yape</div>
+                                                <div class="method-desc">Paga con Yape desde tu celular</div>
+                                            </div>
+                                        </label>
+                                        <label class="payment-option">
+                                            <input type="radio" name="pago" value="plin">
+                                            <i class="fas fa-wallet"></i>
+                                            <div class="method-info">
+                                                <div class="method-name">Plin</div>
+                                                <div class="method-desc">Paga con Plin desde tu banco</div>
+                                            </div>
+                                        </label>
+                                        <label class="payment-option">
+                                            <input type="radio" name="pago" value="efectivo">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                            <div class="method-info">
+                                                <div class="method-name">Efectivo contra entrega</div>
+                                                <div class="method-desc">Paga cuando recibas tu pedido</div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div id="card-fields" style="margin-top: 20px;">
+                                        <div class="form-row">
+                                            <div class="form-group" style="grid-column: span 2;">
+                                                <label class="form-label">Número de Tarjeta</label>
+                                                <input type="text" name="numeroTarjeta" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19">
+                                            </div>
+                                        </div>
+                                        <div class="form-row-3">
+                                            <div class="form-group">
+                                                <label class="form-label">Mes</label>
+                                                <select name="mesExpiracion" class="form-select">
+                                                    <option value="">MM</option>
+                                                    <option value="01">01</option>
+                                                    <option value="02">02</option>
+                                                    <option value="03">03</option>
+                                                    <option value="04">04</option>
+                                                    <option value="05">05</option>
+                                                    <option value="06">06</option>
+                                                    <option value="07">07</option>
+                                                    <option value="08">08</option>
+                                                    <option value="09">09</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Año</label>
+                                                <select name="anioExpiracion" class="form-select">
+                                                    <option value="">AA</option>
+                                                    <option value="26">2026</option>
+                                                    <option value="27">2027</option>
+                                                    <option value="28">2028</option>
+                                                    <option value="29">2029</option>
+                                                    <option value="30">2030</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">CVV</label>
+                                                <input type="text" name="cvv" class="form-input" placeholder="123" maxlength="4">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-top: 15px;">
+                                            <label class="form-label">Nombre en la Tarjeta</label>
+                                            <input type="text" name="nombreTarjeta" class="form-input" placeholder="Nombre como aparece en la tarjeta">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="checkout-sidebar">
+                            <div class="order-summary">
+                                <h3 style="margin-bottom: 20px;">Resumen del Pedido</h3>
+                                <div id="order-items"></div>
+                                <hr style="margin: 15px 0; border-color: var(--border-light);">
+                                <div class="summary-row">
+                                    <span>Subtotal</span>
+                                    <span id="summary-subtotal">S/ 0.00</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>IGV (18%)</span>
+                                    <span id="summary-igv">S/ 0.00</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Envío</span>
+                                    <span id="summary-envio">S/ 0.00</span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span>Total</span>
+                                    <span id="summary-total">S/ 0.00</span>
+                                </div>
+                                <button type="button" onclick="CheckoutPage.processOrder()" class="btn btn-primary btn-lg btn-block" style="margin-top: 20px;">
+                                    <i class="fas fa-lock"></i> Confirmar Pedido
+                                </button>
+                                <div class="secure-badge">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Tu información está segura con SSL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-bottom">
+                <div class="container">
+                    <p>&copy; 2026 Leandro Baterías.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/utils/format.js"></script>
+    <script src="../js/components/modal.js"></script>
+    <script src="../js/pages/checkout.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>
